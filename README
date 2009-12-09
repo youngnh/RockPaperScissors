@@ -1,0 +1,32 @@
+Rock Paper Scissors
+----
+Write an interactive game of Rock, Paper, Scissors.
+
+There will be two players, the program should prompt each in turn for their name
+and then each for their "throw" until notifying that one or the other has one.
+
+$ java RockPaperScissors
+Player 1 Name: Nate
+Player 2 Name: Ben
+[R]ock, [P]aper, or [S]cissors? R
+[R]ock, [P]aper, or [S]cissors? P
+Ben Wins!
+
+The program should be easily modifiable to handle the following
+score scenarios:
+  "First to X" - winner is the first player to win X matches
+  "Best of X" - winner is the first one to win more than 50% of X matches, only the required number of matches should be played
+  "To X, win by Y" - winner is first one to win X or more matches, by a margin of Y
+
+There's no need to drag XML into this, command line options should be preferred.
+
+$ java RockPaperScissors -to 5
+$ java RockPaperScissors -bestof 5
+$ java RockPaperScissors -to 5 -by 2
+
+It should be written in Java, and I'm interested in how Test-Driven Development 
+guides your design decisions, so it would be helpful if your commit log left a 
+concise and explanatory trail of what you did and why.  git rebase --interactive 
+may be helpful in revising the past in this regard.
+
+No tricks, here, just an excercise in writing small, complete software.
