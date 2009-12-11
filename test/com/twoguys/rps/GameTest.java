@@ -3,20 +3,28 @@ package com.twoguys.rps;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
+import org.junit.Before;
 import org.junit.Test;
 
 public class GameTest {
 
-    @Test
-    public void testPlayerWithBetterThrowWins() {
-	String nate = "Nate";
-	String ben = "Ben";
+    private String nate = "Nate";
+    private String ben = "Ben";
 	
-	Player p1 = mock(Player.class);
-	Player p2 = mock(Player.class);
+    private Player p1;
+    private Player p2;
+
+    @Before
+    public void setup() {
+	p1 = mock(Player.class);
+	p2 = mock(Player.class);
 
 	when(p1.getName()).thenReturn(nate);
 	when(p2.getName()).thenReturn(ben);
+    }
+
+    @Test
+    public void testPaperPlayerBeatsRock() {
 	when(p1.getMove()).thenReturn(new Rock());
 	when(p2.getMove()).thenReturn(new Paper());
 
@@ -26,4 +34,15 @@ public class GameTest {
 	assertEquals(ben, winner.getName());
     }
     
+    @Test
+    public void testRockPlayerBeatsScissors() {
+	when(p1.getMove()).thenReturn(new Rock());
+	when(p2.getMove()).thenReturn(new Scissors());
+
+	Game game = new Game(p1, p2);
+	Player winner = game.play();
+
+	assertEquals(nate, winner.getName());
+    }
+
 }
