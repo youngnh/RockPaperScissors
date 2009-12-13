@@ -10,6 +10,7 @@ public class InteractivePlayerTest {
 
     public final static String P1_PROMPT = "Player 1 Name: ";
     private String nate = "Nate";
+    private String ben = "Ben";
     private Reader in;
     private Writer out;
 
@@ -32,5 +33,15 @@ public class InteractivePlayerTest {
 	Player player = new InteractivePlayer(in, out);
 
 	assertEquals(-1, in.read());
-    }	
+    }
+
+    @Test
+    public void testSetsPlayerName() throws Exception {
+	Player player = new InteractivePlayer(in, out);
+	assertEquals(nate, player.getName());
+
+	in = new StringReader(ben + "\n");
+	player = new InteractivePlayer(in, out);
+	assertEquals(ben, player.getName());
+    }
 }
