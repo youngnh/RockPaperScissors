@@ -10,12 +10,17 @@ public class InteractivePlayerTest {
 
     public final static String P1_PROMPT = "Player 1 Name: ";
     private String nate = "Nate";
+    private Reader in;
+    private Writer out;
+
+    @Before
+    public void setup() {
+	in = new StringReader(nate + "\n");
+	out = new CharArrayWriter();
+    }
 
     @Test
     public void testPromptsForName() throws Exception {
-	Reader in = new StringReader(nate + "\n");
-	Writer out = new CharArrayWriter();
-
 	Player player = new InteractivePlayer(in, out);
 
 	String written = out.toString();
@@ -24,14 +29,8 @@ public class InteractivePlayerTest {
 
     @Test
     public void testReadsNameFromInput() throws Exception {
-	Reader in = new StringReader(nate + "\n");
-	Writer out = new CharArrayWriter();
-
 	Player player = new InteractivePlayer(in, out);
 
-	String written = out.toString();
-	assertEquals(P1_PROMPT, written);
-
 	assertEquals(-1, in.read());
-    }
+    }	
 }
