@@ -25,8 +25,8 @@ public class GameTest {
 
     @Test
     public void testPaperPlayerBeatsRock() {
-	when(p1.getMove()).thenReturn(new Rock());
-	when(p2.getMove()).thenReturn(new Paper());
+	when(p1.getThrow()).thenReturn(new Rock());
+	when(p2.getThrow()).thenReturn(new Paper());
 
 	Game game = new Game(p1, p2);
 	Player winner = game.play();
@@ -36,8 +36,8 @@ public class GameTest {
     
     @Test
     public void testRockPlayerBeatsScissors() {
-	when(p1.getMove()).thenReturn(new Rock());
-	when(p2.getMove()).thenReturn(new Scissors());
+	when(p1.getThrow()).thenReturn(new Rock());
+	when(p2.getThrow()).thenReturn(new Scissors());
 
 	Game game = new Game(p1, p2);
 	Player winner = game.play();

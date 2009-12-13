@@ -11,8 +11,8 @@ public class Game {
     }
 
     public Player play() {
-	Throw p1Throw = p1.getMove();
-	Throw p2Throw = p2.getMove();
+	Throw p1Throw = p1.getThrow();
+	Throw p2Throw = p2.getThrow();
 
 	return p1Throw.beats(p2Throw) ? p1 : p2;
     }

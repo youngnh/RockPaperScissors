@@ -64,8 +64,30 @@ public class InteractivePlayerTest {
 	Player player = new InteractivePlayer(in, out, 1);
 	out.reset();
 
-	player.getMove();
+	player.getThrow();
 	String written = out.toString();
 	assertEquals(MOVE_PROMPT, written);
+    }
+
+    @Test
+    public void testGetThrowReturnsRock() throws Exception {
+	in = new StringReader(nate + "\n" + "R" + "\n");
+
+	Player player = new InteractivePlayer(in, out, 1);
+	out.reset();
+
+	Throw thrown = player.getThrow();
+	assertEquals(Rock.class, thrown.getClass());
+    }
+
+    @Test
+    public void testGetThrowReturnsPaper() throws Exception {
+	in = new StringReader(nate + "\n" + "P" + "\n");
+
+	Player player = new InteractivePlayer(in, out, 1);
+	out.reset();
+
+	Throw thrown = player.getThrow();
+	assertEquals(Paper.class, thrown.getClass());
     }
 }

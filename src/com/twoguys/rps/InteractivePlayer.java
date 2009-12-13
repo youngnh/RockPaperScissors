@@ -22,16 +22,34 @@ public class InteractivePlayer implements Player {
 	name = fromPlayer.readLine();
     }
 
+    @Override
     public String getName() {
 	return name;
     }
 
-    public Throw getMove() {
+    @Override
+    public Throw getThrow() {
+	Throw thrown = null;
 	try {
 	    toPlayer.write("[R]ock, [P]aper, or [S]cissors? ");
+	    String input = fromPlayer.readLine();
+	    if(input != null) {
+		char choice = input.toUpperCase().charAt(0);
+		switch(choice) {
+		case 'R':
+		    thrown = new Rock();
+		    break;
+		case 'P':
+		    thrown = new Paper();
+		    break;
+		case 'S':
+		    thrown = new Scissors();
+		    break;
+		}
+	    }
 	} catch(IOException e) {
 	    // squelch
 	}
-	return null;
+	return thrown;
     }
 }
