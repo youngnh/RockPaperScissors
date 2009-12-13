@@ -4,13 +4,22 @@ import java.io.*;
 
 public class InteractivePlayer implements Player {
 
+    private String prompt;
+    private LineNumberReader fromPlayer;
+    private Writer toPlayer;
     private String name;
 
     public InteractivePlayer(Reader fromPlayer, Writer toPlayer, int n) throws IOException {
-	toPlayer.write("Player " + n + " Name: ");
+	this.prompt = "Player " + n + " Name: ";
+	this.toPlayer = toPlayer;
+	this.fromPlayer = new LineNumberReader(fromPlayer);
+	init();
+    }
+
+    private void init() throws IOException {
+	toPlayer.write(prompt);
 	toPlayer.flush();
-	LineNumberReader in = new LineNumberReader(fromPlayer);
-	name = in.readLine();
+	name = fromPlayer.readLine();
     }
 
     public String getName() {
@@ -18,6 +27,11 @@ public class InteractivePlayer implements Player {
     }
 
     public Throw getMove() {
+	try {
+	    toPlayer.write("[R]ock, [P]aper, or [S]cissors? ");
+	} catch(IOException e) {
+	    // squelch
+	}
 	return null;
     }
 }
