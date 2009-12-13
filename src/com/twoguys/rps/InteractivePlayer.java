@@ -6,8 +6,8 @@ public class InteractivePlayer implements Player {
 
     private String name;
 
-    public InteractivePlayer(Reader fromPlayer, Writer toPlayer) throws IOException {
-	toPlayer.write("Player 1 Name: ");
+    public InteractivePlayer(Reader fromPlayer, Writer toPlayer, int n) throws IOException {
+	toPlayer.write("Player " + n + " Name: ");
 	toPlayer.flush();
 	LineNumberReader in = new LineNumberReader(fromPlayer);
 	name = in.readLine();
