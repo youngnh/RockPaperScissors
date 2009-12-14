@@ -1,6 +1,6 @@
 package com.twoguys.util;
 
-public class Just<T> implements Maybe<T> {
+public class Just<T> implements Maybe {
 
     private T value;
 

@@ -1,8 +1,8 @@
 package com.twoguys.util;
 
-public class Nothing<T> implements Maybe<T> {
+public class Nothing implements Maybe {
 
-    public T value() {
+    public <T> T value() {
 	return null;
     }
 
