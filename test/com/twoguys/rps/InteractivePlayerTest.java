@@ -90,4 +90,14 @@ public class InteractivePlayerTest {
 	Throw thrown = player.getThrow();
 	assertEquals(Paper.class, thrown.getClass());
     }
+
+    @Test
+    public void testNotifyWinner() throws Exception {
+	Player player = new InteractivePlayer(in, out, 1);
+	out.reset();
+
+	player.notifyWinner();
+	String written = out.toString();
+	assertEquals(nate + " Wins!\n", written);
+    }
 }

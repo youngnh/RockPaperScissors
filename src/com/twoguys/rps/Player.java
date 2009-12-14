@@ -4,5 +4,6 @@ public interface Player {
 
     public String getName();
     public Throw getThrow();
+    public void notifyWinner();
 
 }

@@ -52,4 +52,13 @@ public class InteractivePlayer implements Player {
 	}
 	return thrown;
     }
+
+    @Override
+    public void notifyWinner() {
+	try {
+	    toPlayer.write(getName() + " Wins!\n");
+	} catch(IOException e) {
+	    // squelch
+	}
+    }
 }
