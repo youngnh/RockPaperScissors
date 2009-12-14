@@ -1,6 +1,10 @@
 package com.twoguys.rps;
 
-public class FirstTo implements Scoring {
+import com.twoguys.util.*;
+
+public class FirstTo extends Game {
+
+    private int to;
 
     public FirstTo(int to) {
 	this.to = to;

@@ -7,13 +7,18 @@ public class RockPaperScissors {
     public static void main(String[] args) throws Exception {
 	Game game;
 	if(args[0] == "-bestof") {
-	    game = new BestOf(args[1]);
-	}
-	if(args[0] == "-to") {
-	    game = new FirstTo(args[1]);
-	}
-	if(args[0] == "-to" && args[2] == "-by") {
-	    game = new WinBy(args[1], args[3]);
+	    int x = Integer.parseInt(args[1]);
+	    game = new BestOf(x);
+	} else if(args[0] == "-to") {
+	    int x = Integer.parseInt(args[1]);
+	    game = new FirstTo(x);
+	} else if(args[0] == "-to" && args[2] == "-by") {
+	    int x = Integer.parseInt(args[1]);
+	    int y = Integer.parseInt(args[3]);
+	    game = new WinBy(x, y);
+	} else {
+	    System.exit(1);
+	    return;
 	}
 
 	Reader in = new InputStreamReader(System.in);

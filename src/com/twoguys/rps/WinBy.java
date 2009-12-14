@@ -1,6 +1,11 @@
 package com.twoguys.rps;
 
-public class WinBy implements Scoring {
+import com.twoguys.util.*;
+
+public class WinBy extends Game {
+
+    private int to;
+    private int by;
 
     public WinBy(int to, int by) {
 	this.to = to;
