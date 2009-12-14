@@ -32,6 +32,7 @@ public class InteractivePlayer implements Player {
 	Throw thrown = null;
 	try {
 	    toPlayer.write("[R]ock, [P]aper, or [S]cissors? ");
+	    toPlayer.flush();
 	    String input = fromPlayer.readLine();
 	    if(input != null) {
 		char choice = input.toUpperCase().charAt(0);
@@ -57,6 +58,7 @@ public class InteractivePlayer implements Player {
     public void notifyWinner() {
 	try {
 	    toPlayer.write(getName() + " Wins!\n");
+	    toPlayer.flush();
 	} catch(IOException e) {
 	    // squelch
 	}
