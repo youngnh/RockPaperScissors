@@ -14,4 +14,11 @@ public class MaybeTest {
 	assertEquals(expected, actual);
     }
 
+    @Test
+    public void testNothingHoldsNullValue() {
+	Maybe<String> something = new Nothing();
+	String actual = something.value();
+	assertNull(actual);
+    }
+
 }
