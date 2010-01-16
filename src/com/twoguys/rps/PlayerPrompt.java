@@ -14,8 +14,8 @@ public class PlayerPrompt {
 
     public Player prompt() throws IOException {
 	prompt.prompt();
-	response.read();
-	return null;
+	String name = response.read();
+	return new Player(name);
     }
 
 }

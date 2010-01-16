@@ -1,5 +1,6 @@
 package com.twoguys.rps;
 
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 import org.junit.*;
@@ -41,6 +42,21 @@ public class PlayerPromptTest {
 	
 	inOrder.verify(mockPrompt).prompt();
 	inOrder.verify(mockResp).read();
+    }
+
+    @Test
+    public void testPlayerPromptReturnsPlayerWithNameRead() throws Exception {
+	Prompt mockPrompt = mock(Prompt.class);
+	Response mockResp = mock(Response.class);
+
+	String playerName = "Lebron";
+	when(mockResp.read()).thenReturn(playerName);
+
+	PlayerPrompt playerPrompt = new PlayerPrompt(mockPrompt, mockResp);
+	Player player = playerPrompt.prompt();
+
+	String actual = player.getName();
+	assertEquals(playerName, actual);
     }
 
 }
