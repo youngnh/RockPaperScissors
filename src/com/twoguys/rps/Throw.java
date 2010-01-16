@@ -11,4 +11,9 @@ public abstract class Throw {
     }
 
     public abstract Class<? extends Throw> getPwns();
+
+    public boolean equals(Object obj) {
+	return (getClass() == obj.getClass());
+    }
+
 }
