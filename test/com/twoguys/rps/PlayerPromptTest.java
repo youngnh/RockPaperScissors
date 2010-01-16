@@ -17,4 +17,15 @@ public class PlayerPromptTest {
 	verify(mockPrompt).prompt();
     }
 
+    @Test
+    public void testPlayerPromptReadsResponse() throws Exception {
+	Prompt mockPrompt = mock(Prompt.class);
+	Response mockResp = mock(Response.class);
+
+	PlayerPrompt playerPrompt = new PlayerPrompt(mockPrompt, mockResp);
+	playerPrompt.prompt();
+
+	verify(mockResp).read();
+    }
+
 }
