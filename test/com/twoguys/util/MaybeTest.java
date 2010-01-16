@@ -21,4 +21,9 @@ public class MaybeTest {
 	assertNull(actual);
     }
 
+    @Test
+    public void testNothingIsEqualToNothing() {
+	assertEquals(new Nothing(), new Nothing());
+    }
+
 }
