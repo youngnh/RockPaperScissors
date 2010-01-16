@@ -16,4 +16,12 @@ public class ResponseTest {
 	assertEquals(message, actual);
     }
 
+    @Test
+    public void testResponseReadsUntilEOF() throws Exception {
+	String message = "because the night";
+	Reader in = new StringReader(message);
+	Response response = new Response(in);
+	String actual = response.read();
+	assertEquals(message, actual);
+    }
 }
