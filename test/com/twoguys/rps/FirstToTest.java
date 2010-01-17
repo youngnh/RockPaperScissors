@@ -3,6 +3,7 @@ package com.twoguys.rps;
 import static org.junit.Assert.*;
 
 import com.twoguys.util.*;
+import java.util.*;
 import org.junit.*;
 
 public class FirstToTest {
@@ -92,4 +93,21 @@ public class FirstToTest {
 	assertEquals(player1, winner.value());
     }
 
+    @Test(expected=IllegalArgumentException.class)
+    public void test0ThrowsIllegalArgumentException() {
+	new FirstTo(0);
+    }
+
+    @Test(expected=IllegalArgumentException.class)
+    public void testNegativeNumbersThrowsIllegalArgumentException() {
+	Random random = new Random();
+	int num = random.nextInt();
+	while(num == 0) {
+	    num = random.nextInt();
+	}
+	if(num > 0) {
+	    num *= -1;
+	}
+	new FirstTo(num);
+    }
 }
