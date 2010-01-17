@@ -3,6 +3,7 @@ package com.twoguys.rps;
 import static org.junit.Assert.*;
 
 import com.twoguys.util.*;
+import java.util.*;
 import org.junit.*;
 
 public class BestOfTest {
@@ -35,4 +36,31 @@ public class BestOfTest {
 	assertEquals(new Nothing(), winner);
     }
 
+    @Test(expected=IllegalArgumentException.class)
+    public void testNegativeNumbersThrowsIllegalArgumentException() {
+	new BestOf(-1);
+    }
+
+    @Test(expected=IllegalArgumentException.class)
+    public void test0ThrowsIllegalArgumentException() {
+	new BestOf(0);
+    }
+
+    @Test(expected=IllegalArgumentException.class)
+    public void test1ThrowsIllegalArgumentException() {
+	new BestOf(1);
+    }
+    
+    @Test(expected=IllegalArgumentException.class)
+    public void testEvenNumberThrowsIllegalArgumentException() {
+	Random random = new Random();
+	int num = random.nextInt();
+	while(num <= 1) {
+	    num = random.nextInt();
+	}
+	if(num % 2 != 0) {
+	    num++;
+	}
+	new BestOf(num);
+    }
 }
