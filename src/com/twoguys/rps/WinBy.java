@@ -8,6 +8,10 @@ public class WinBy implements WinLogic {
     private int by;
 
     public WinBy(int to, int by) {
+	boolean valid = (to > 0 && by >= 0 && to >= by);
+	if(!valid) {
+	    throw new IllegalArgumentException("Must be to a number larger than 0 by a postive number less than that");
+	}
 	this.to = to;
 	this.by = by;
     }

@@ -3,6 +3,7 @@ package com.twoguys.rps;
 import static org.junit.Assert.*;
 
 import com.twoguys.util.*;
+import java.util.*;
 import org.junit.*;
 
 public class WinByTest {
@@ -120,4 +121,47 @@ public class WinByTest {
 	assertEquals(player1, winner.value());
     }
 
+    @Test(expected=IllegalArgumentException.class)
+    public void testTo0ThrowsIllegalArgumentException() {
+	new WinBy(0, 0);
+    }
+
+    @Test(expected=IllegalArgumentException.class)
+    public void testToANegativeNumberThrowsIllegalArgumentException() {
+	Random random = new Random();
+	int num = random.nextInt();
+	while(num == 0) {
+	    num = random.nextInt();
+	}
+	if(num > 0) {
+	    num *= -1;
+	}
+	new WinBy(num, 2);
+    }
+
+    @Test(expected=IllegalArgumentException.class)
+    public void testByANegativeNumberThrowsIllegalArgumentException() {
+	Random random = new Random();
+	int num = random.nextInt();
+	while(num == 0) {
+	    num = random.nextInt();
+	}
+	if(num > 0) {
+	    num *= -1;
+	}
+	new WinBy(5, num);
+    }
+
+    @Test(expected=IllegalArgumentException.class)
+    public void testByANumberGreaterThanToThrowsIllegalArgumentException() {
+	Random random = new Random();
+	int num = random.nextInt();
+	while(num == 0) {
+	    num = random.nextInt();
+	}
+	if(num < 0) {
+	    num *= -1;
+	}
+	new WinBy(num, num+2);
+    }
 }
