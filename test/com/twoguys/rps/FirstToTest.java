@@ -21,4 +21,75 @@ public class FirstToTest {
 	assertEquals(new Nothing(), winner);
     }
 
+    @Test
+    public void testPlayer1AtScoreFirstWins() {
+	Player player1 = new Player("Darth Vader");
+	Player player2 = new Player("Predator");
+
+	Pair<Player, Integer> p1 = new Pair<Player, Integer>(player1, 5);
+	Pair<Player, Integer> p2 = new Pair<Player, Integer>(player2, 1);
+
+	WinLogic logic = new FirstTo(5);
+	Maybe<Player> winner = logic.determineWinner(p1, p2);
+
+	assertEquals(player1, winner.value());
+    }
+
+    @Test
+    public void testPlayer2WithScoreWins() {
+	Player player1 = new Player("Darth Vader");
+	Player player2 = new Player("Predator");
+
+	Pair<Player, Integer> p1 = new Pair<Player, Integer>(player1, 1);
+	Pair<Player, Integer> p2 = new Pair<Player, Integer>(player2, 5);
+
+	WinLogic logic = new FirstTo(5);
+	Maybe<Player> winner = logic.determineWinner(p1, p2);
+
+	assertEquals(player2, winner.value());
+    }
+
+    @Test
+    public void testPlayer1WinsIfGreaterThanScore() {
+	Player player1 = new Player("Darth Vader");
+	Player player2 = new Player("Predator");
+
+	Pair<Player, Integer> p1 = new Pair<Player, Integer>(player1, 6);
+	Pair<Player, Integer> p2 = new Pair<Player, Integer>(player2, 1);
+
+	WinLogic logic = new FirstTo(5);
+	Maybe<Player> winner = logic.determineWinner(p1, p2);
+
+	assertEquals(player1, winner.value());
+    }
+
+
+    @Test
+    public void testPlayer2WinsIfGreaterThanScore() {
+	Player player1 = new Player("Darth Vader");
+	Player player2 = new Player("Predator");
+
+	Pair<Player, Integer> p1 = new Pair<Player, Integer>(player1, 1);
+	Pair<Player, Integer> p2 = new Pair<Player, Integer>(player2, 6);
+
+	WinLogic logic = new FirstTo(5);
+	Maybe<Player> winner = logic.determineWinner(p1, p2);
+
+	assertEquals(player2, winner.value());
+    }
+
+    @Test
+    public void testPlayer1WinsWhenTied() {
+	Player player1 = new Player("Darth Vader");
+	Player player2 = new Player("Predator");
+
+	Pair<Player, Integer> p1 = new Pair<Player, Integer>(player1, 5);
+	Pair<Player, Integer> p2 = new Pair<Player, Integer>(player2, 5);
+
+	WinLogic logic = new FirstTo(5);
+	Maybe<Player> winner = logic.determineWinner(p1, p2);
+
+	assertEquals(player1, winner.value());
+    }
+
 }
