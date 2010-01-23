@@ -2,6 +2,7 @@ package com.twoguys.rps;
 
 import static org.hamcrest.Matchers.*;
 
+import com.twoguys.util.*;
 import org.hamcrest.*;
 
 public class WinLogicFactory {
@@ -30,21 +31,21 @@ public class WinLogicFactory {
 	int by = Integer.parseInt(byString);
 
 	WinLogic logic = new FirstToWinBy(to, by);
-	return new Right(logic);
+	return new Right<String, WinLogic>(logic);
     }
 
     public static Either<String, WinLogic> createBestOf(String xString) {
 	int x = Integer.parseInt(xString);
 
 	WinLogic logic = new BestOf(x);
-	return new Right(logic);
+	return new Right<String, WinLogic>(logic);
     }
 
     public static Either<String, WinLogic> createFirstTo(String xString) {
 	int x = Integer.parseInt(xString);
 
 	WinLogic logic = new FirstTo(x);
-	return new Right(logic);
+	return new Right<String, WinLogic>(logic);
     }
 
     public static Either<String, WinLogic> usage() {
@@ -52,7 +53,7 @@ public class WinLogicFactory {
 	    "usage:\tRockPaperScissors -to to\n" +
 	    "      \tRockPaperScissors -bestof x\n" +
 	    "      \tRockPaperScissors -to to -by by";
-	return new Left(usage);
+	return new Left<String, WinLogic>(usage);
     }
 
 }

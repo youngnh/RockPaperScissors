@@ -1,6 +1,6 @@
-package com.twoguys.rps;
+package com.twoguys.util;
 
-public class Right<B> implements Either<Object, B> {
+public class Right<A, B> implements Either<A, B> {
 
     private B value;
 
@@ -8,7 +8,7 @@ public class Right<B> implements Either<Object, B> {
 	this.value = value;
     }
 
-    public Object left() {
+    public A left() {
 	return null;
     }
 

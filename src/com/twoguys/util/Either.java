@@ -1,4 +1,4 @@
-package com.twoguys.rps;
+package com.twoguys.util;
 
 public interface Either<A, B> {
 
