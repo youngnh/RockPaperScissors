@@ -1,0 +1,64 @@
+<project name="RockPaperScissors" default="dist" basedir=".">
+  <property name="src" location="src" />
+  <property name="test" location="test" />
+  <property name="lib" location="lib" />
+  <property name="build" location="build" />
+  <property name="dist" location="dist" />
+  <property name="classes" location="${build}/classes" />
+  <property name="test.classes" location="${build}/test-classes" />
+  <property name="test.report" location="${build}/reports" />
+
+  <target name="init">
+    <tstamp />
+    <mkdir dir="${src}" />
+    <mkdir dir="${test}" />
+    <mkdir dir="${lib}" />
+    <mkdir dir="${classes}" />
+    <mkdir dir="${test.classes}" />
+    <mkdir dir="${test.report}" />
+    <mkdir dir="${dist}" />
+  </target>
+
+  <path id="class.path">
+    <pathelement location="${classes}" />
+    <pathelement location="${test.classes}" />
+    <fileset dir="${lib}">
+      <include name="*.jar" />
+    </fileset>
+  </path>
+
+  <target name="compile" depends="init">
+    <javac destdir="${classes}" debug="on">
+      <src>
+	<pathelement location="${src}" />
+      </src>
+      <classpath refid="class.path" />
+    </javac>
+    <javac destdir="${test.classes}" debug="on">
+      <src>
+	<pathelement location="${test}" />
+      </src>
+      <classpath refid="class.path" />
+    </javac>
+  </target>
+
+  <target name="test" depends="compile">
+    <junit printsummary="on" haltonerror="true" haltonfailure="true">
+      <classpath refid="class.path" />
+      <batchtest todir="${test.report}">
+	<formatter type="plain" />
+	<fileset dir="${test}">
+	  <include name="**/*Test.java"/>
+	</fileset>
+      </batchtest>
+    </junit>
+  </target>
+
+  <target name="dist" depends="test">
+    <jar destfile="${dist}/${ant.project.name}-${DSTAMP}.jar" basedir="${classes}"/>
+  </target>
+
+  <target name="clean">
+    <delete dir="${build}" />
+  </target>
+</project>
