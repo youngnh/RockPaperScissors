@@ -3,6 +3,7 @@ package com.twoguys.rps;
 import static org.junit.Assert.*;
 
 import java.io.*;
+import org.apache.commons.io.*;
 import org.junit.*;
 
 public class RockPaperScissorsTest {
@@ -50,6 +51,70 @@ public class RockPaperScissorsTest {
 	String actual = out.toString();
 	assertNotNull(actual);
 	assertTrue(actual.length() > 0);
+    }
+
+    @Ignore
+    @Test
+    public void testNoArgumentsResultsInSingleThrowGame() throws Exception {
+	Reader in = new FileReader("data/RockPaperScissorsTest/noargs_game.input");
+	Writer out = new StringWriter();
+
+	String[] args = {};
+	RockPaperScissors rps = new RockPaperScissors(in, out);
+	rps.run(args);
+
+	String expected = IOUtils.toString(new FileReader("data/RockPaperScissorsTest/noargs_game.expected"));
+
+	String actual = out.toString();
+	assertEquals(expected, actual);
+    }
+
+    @Ignore
+    @Test
+    public void testFirstToGameResultsInBothPlayersPlaying() throws Exception {
+	Reader in = new FileReader("data/RockPaperScissorsTest/firstto_game.input");
+	Writer out = new StringWriter();
+
+	String[] args = { "-to", "3" };
+	RockPaperScissors rps = new RockPaperScissors(in, out);
+	rps.run(args);
+
+	String expected = IOUtils.toString(new FileReader("data/RockPaperScissorsTest/firstto_game.expected"));
+
+	String actual = out.toString();
+	assertEquals(expected, actual);
+    }
+
+    @Ignore
+    @Test
+    public void testBestOfStopsAfterPlayerWinsMoreThanHalf() throws Exception {
+	Reader in = new FileReader("data/RockPaperScissorsTest/bestof_game.input");
+	Writer out = new StringWriter();
+
+	String[] args = { "-bestof", "5" };
+	RockPaperScissors rps = new RockPaperScissors(in, out);
+	rps.run(args);
+
+	String expected = IOUtils.toString(new FileReader("data/RockPaperScissorsTest/bestof_game.expected"));
+
+	String actual = out.toString();
+	assertEquals(expected, actual);
+    }
+
+    @Ignore
+    @Test
+    public void testWinByGameContinuesUntilOnePlayerBeatsOtherByMargin() throws Exception {
+	Reader in = new FileReader("data/RockPaperScissorsTest/winby_game.input");
+	Writer out = new StringWriter();
+
+	String[] args = { "-to", "3", "-by", "2" };
+	RockPaperScissors rps = new RockPaperScissors(in, out);
+	rps.run(args);
+
+	String expected = IOUtils.toString(new FileReader("data/RockPaperScissorsTest/winby_game.expected"));
+
+	String actual = out.toString();
+	assertEquals(expected, actual);
     }
 
     class ExceptionProneWriter extends Writer {
