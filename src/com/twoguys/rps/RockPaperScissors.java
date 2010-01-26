@@ -9,15 +9,19 @@ public class RockPaperScissors {
 	"       \tRockPaperScissors -to to -by by\n" +
 	"       \tRockPaperScissors -bestof x\n";
 
+    private Writer out;
+
     public RockPaperScissors(Reader in, Writer out) {
-	try {
-	    out.write(USAGE);
-	    out.flush();
-	} catch(Exception e) {
-	}
+	this.out = out;
     }
 
     public void run(String[] args) {
+	try {
+	    out.write(USAGE);
+	    out.flush();
+	} catch(IOException e) {
+	    e.printStackTrace(new PrintWriter(out));
+	}
     }
 
 }

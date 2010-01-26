@@ -46,7 +46,7 @@
     <junit printsummary="on" haltonerror="true" haltonfailure="true">
       <classpath refid="class.path" />
       <batchtest todir="${test.report}">
-	<formatter type="plain" />
+	<formatter type="plain" usefile="false" />
 	<fileset dir="${test}">
 	  <include name="**/*Test.java"/>
 	</fileset>

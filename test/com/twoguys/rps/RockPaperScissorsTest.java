@@ -8,6 +8,18 @@ import org.junit.*;
 public class RockPaperScissorsTest {
 
     @Test
+    public void testNothingOutputIfRPSNotRun() {
+	StringReader in = new StringReader("");
+	StringWriter out = new StringWriter();
+
+	String[] args = { "-jabberwocky" };
+
+	RockPaperScissors rps = new RockPaperScissors(in, out);
+
+	assertEquals("", out.toString());
+    }
+
+    @Test
     public void testDisplaysUsageWithBogusArgs() {
 	StringReader in = new StringReader("");
 	StringWriter out = new StringWriter();
@@ -23,6 +35,57 @@ public class RockPaperScissorsTest {
 	    "       \tRockPaperScissors -bestof x\n";
 
 	assertEquals(usage, out.toString());
+    }
+
+    @Test
+    public void testIOExceptionResultsInSomeKindOfOutput() throws Exception {
+	StringReader in = new StringReader("");
+	Writer out = new ExceptionProneWriter();
+
+	String[] args = {};
+
+	RockPaperScissors rps = new RockPaperScissors(in, out);
+	rps.run(args);
+
+	String actual = out.toString();
+	assertNotNull(actual);
+	assertTrue(actual.length() > 0);
+    }
+
+    class ExceptionProneWriter extends Writer {
+
+	private boolean crashed = false;
+	private StringWriter writer = new StringWriter();
+
+	@Override
+	public void close() throws IOException {
+	    writer.close();
+	}
+
+	@Override
+	public void flush() {
+	    writer.flush();
+	}
+
+	@Override
+	public void write(char[] cbuf, int off, int len) {
+	    writer.write(cbuf, off, len);
+	}
+
+	@Override
+	public void write(String str) throws IOException {
+	    if(!crashed) {
+		crashed = true;
+		throw new IOException("Guess I'm just crashy...");
+	    } else {
+		writer.write(str);
+	    }
+	}
+
+	@Override
+	public String toString() {
+	    return writer.toString();
+	}
     }
 
 }
