@@ -1,9 +1,8 @@
 package  com.twoguys.rps;
 
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.*;
 
-import org.junit.Test;
+import org.junit.*;
 
 public class ThrowTest {
 
@@ -35,6 +34,22 @@ public class ThrowTest {
     @Test
     public void testScissorsLosesToRock() {
 	assertLosesTo(new Scissors(), new Rock());
+    }
+
+    @Test
+    public void testRockEqualsRock() {
+	assertEquals(new Rock(), new Rock());
+	assertEquals(new Paper(), new Paper());
+	assertEquals(new Scissors(), new Scissors());
+	
+	assertFalse(new Rock().equals(new Paper()));
+	assertFalse(new Rock().equals(new Scissors()));
+
+	assertFalse(new Paper().equals(new Rock()));
+	assertFalse(new Paper().equals(new Scissors()));
+
+	assertFalse(new Scissors().equals(new Rock()));
+	assertFalse(new Scissors().equals(new Paper()));
     }
 
     public void assertBeats(Throw thrown, Throw other) {
