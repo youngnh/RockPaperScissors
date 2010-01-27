@@ -3,7 +3,7 @@ package com.twoguys.rps;
 import com.twoguys.util.*;
 import java.util.*;
 
-public class TryParse<T> {
+public class TryParse<T> implements Read<T> {
 
     private List<Pair<String, T>> possible;
 
@@ -11,7 +11,7 @@ public class TryParse<T> {
 	this.possible = possible;
     }
 
-    public List<Pair<T, String>> parse(String str) {
+    public List<Pair<T, String>> read(String str) {
 	List<Pair<T, String>> list = new ArrayList<Pair<T, String>>();
 
 	for(Pair<String, T> attempt : possible) {

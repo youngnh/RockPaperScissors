@@ -13,7 +13,7 @@ public class TryParseTest {
 	List<Pair<String, Throw>> tries = new ArrayList<Pair<String, Throw>>();
 
 	TryParse tryParse = new TryParse(tries);
-	List<Pair<Throw, String>> result = tryParse.parse("jabberwocky");
+	List<Pair<Throw, String>> result = tryParse.read("jabberwocky");
 
 	assertEquals(0, result.size());
     }
@@ -25,7 +25,7 @@ public class TryParseTest {
 	tries.add(new Pair<String, Throw>("R", rock));
 
 	TryParse tryParse = new TryParse(tries);
-	List<Pair<Throw, String>> result = tryParse.parse("Rjabberwocky");
+	List<Pair<Throw, String>> result = tryParse.read("Rjabberwocky");
 
 	assertEquals(1, result.size());
 	assertSame(rock, result.get(0).a);
@@ -40,7 +40,7 @@ public class TryParseTest {
 	TryParse tryParse = new TryParse(tries);
 	String r = "R";
 	String rest = "jabberwocky";
-	List<Pair<Throw, String>> result = tryParse.parse(r + rest);
+	List<Pair<Throw, String>> result = tryParse.read(r + rest);
 
 	assertEquals(1, result.size());
 	assertEquals(rest, result.get(0).b);
@@ -57,7 +57,7 @@ public class TryParseTest {
 	String rest = "jabberwocky";
 
 	TryParse tryParse = new TryParse(tries);
-	List<Pair<Throw, String>> result = tryParse.parse(start + rest);
+	List<Pair<Throw, String>> result = tryParse.read(start + rest);
 
 	assertEquals(1, result.size());
 	assertEquals(new Paper(), result.get(0).a);
@@ -73,7 +73,7 @@ public class TryParseTest {
 
 	TryParse tryParse = new TryParse(tries);
 	String rest = "jabberwocky";
-	List<Pair<Throw, String>> result = tryParse.parse("Abracadabra" + rest);
+	List<Pair<Throw, String>> result = tryParse.read("Abracadabra" + rest);
 
 	assertEquals(3, result.size());
 
@@ -95,7 +95,7 @@ public class TryParseTest {
 	tries.add(new Pair<String, Throw>("Abracadabra", new Scissors()));
 
 	TryParse tryParse = new TryParse(tries);
-	List<Pair<Throw, String>> result = tryParse.parse("all along the watchtower");
+	List<Pair<Throw, String>> result = tryParse.read("all along the watchtower");
 
 	assertEquals(0, result.size());
     }
