@@ -9,4 +9,5 @@ public class Pair<A,B> {
 	this.a = a;
 	this.b = b;
     }
+
 }
