@@ -1,8 +1,8 @@
-package com.twoguys.rps;
+package com.twoguys.util;
 
 import static org.junit.Assert.*;
 
-import com.twoguys.util.*;
+import com.twoguys.rps.*;
 import java.util.*;
 import org.junit.*;
 

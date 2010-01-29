@@ -1,4 +1,4 @@
-package com.twoguys.rps;
+package com.twoguys.util;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;

@@ -1,6 +1,5 @@
-package com.twoguys.rps;
+package com.twoguys.util;
 
-import com.twoguys.util.*;
 import java.util.*;
 
 public class TryParse<T> implements Read<T> {
