@@ -49,6 +49,7 @@
 	<formatter type="plain" usefile="false" />
 	<fileset dir="${test}">
 	  <include name="**/*Test.java"/>
+	  <exclude name="**/*AbstractTest.java"/>
 	</fileset>
       </batchtest>
     </junit>
