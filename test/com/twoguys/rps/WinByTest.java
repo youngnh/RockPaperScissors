@@ -18,8 +18,8 @@ public class WinByTest {
 	return new WinBy(to, by);
     }
 
-    public int getTo(int by) {
-	return new Random().nextInt(10) + by;
+    public int getTo(int min) {
+	return new Random().nextInt(10) + min;
     }
 
     @Before
@@ -31,7 +31,7 @@ public class WinByTest {
     @Test
     public void testBothScoresBelowTargetNoWinner() {
 	by = 10;
-	to = getTo(by);
+	to = getTo(by + 5);
 	logic = getLogic(to, by);
 	assertNoWinner(to - 1, to - 1);
 	assertNoWinner(to - 5, to - 1);
@@ -43,7 +43,7 @@ public class WinByTest {
     @Test
     public void testNoWinnerIfTied() {
 	by = 10;
-	to = getTo(by);
+	to = getTo(by + 5);
 	logic = getLogic(to, by);
 	assertNoWinner(to, to);
     }
@@ -51,7 +51,7 @@ public class WinByTest {
     @Test
     public void testNoWinnerIfAboveScoreAndNotWinningEnough() {
 	by = 10;
-	to = getTo(by);
+	to = getTo(by + 5);
 	logic = getLogic(to, by);
 	assertNoWinner(to + 5, to + 3);
 	assertNoWinner(to + 3, to + 5);
@@ -60,7 +60,7 @@ public class WinByTest {
     @Test
     public void testPlayer1WinsIfTiedAndByIs0() {
 	by = 0;
-	to = getTo(by);
+	to = getTo(by + 5);
 	logic = getLogic(to, by);
 	assertWinnerIs(player1, to, to);
     }
@@ -68,12 +68,39 @@ public class WinByTest {
     @Test
     public void testHighestWinsIfBothAboveScoreAndWinningBy() {
 	by = 10;
-	to = getTo(by);
+	to = getTo(by + 5);
 	logic = getLogic(to, by);
 	assertWinnerIs(player1, to + 5 + by, to + 2);
 	assertWinnerIs(player2, to + 2, to + 5 + by);
 	assertWinnerIs(player1, to + by, to);
 	assertWinnerIs(player2, to, to + by);
+    }
+
+    @Test
+    public void testNegativeToThrowsIAE() {
+	try {
+	    new WinBy(-1, 5);
+	    fail("Constructor should have thrown an exception");
+	} catch(IllegalArgumentException e) {
+	    assertEquals("Must provide a number greater than 0", e.getMessage());
+	}
+
+	try {
+	    new WinBy(5, -1);
+	    fail("Constructor should have thrown an exception");
+	} catch(IllegalArgumentException e) {
+	    assertEquals("Must provide a number greater than 0", e.getMessage());
+	}
+    }
+
+    @Test
+    public void testLargerByThanToThrowsIAE() {
+	try {
+	    new WinBy(2, 5);
+	    fail("Constructor should have thrown an exception");
+	} catch(IllegalArgumentException e) {
+	    assertEquals("Cannot win by a larger margin (5) than playing to (2)", e.getMessage());
+	}
     }
 
     private void assertNoWinner(int p1Score, int p2Score) {

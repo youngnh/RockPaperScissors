@@ -16,7 +16,7 @@ public abstract class FirstToAbstractTest {
     public abstract WinLogic getLogic(int to);
 
     public int getTo() {
-	return new Random().nextInt(10);
+	return new Random().nextInt(10) + 15;
     }
 
     @Before
