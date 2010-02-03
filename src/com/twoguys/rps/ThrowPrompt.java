@@ -5,7 +5,7 @@ import java.io.*;
 
 public class ThrowPrompt extends Prompt<Throw> {
 
-    public ThrowPrompt(java.io.Reader in, Writer out) {
+    public ThrowPrompt(LineNumberReader in, Writer out) {
 	super(in, new Notify(out, "[R]ock, [P]aper, or [S]cissors? "), new com.twoguys.util.Reader<Throw>(new ReadThrow()));
     }
 

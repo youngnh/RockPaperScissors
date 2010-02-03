@@ -14,7 +14,7 @@ public class PromptTest {
 
     @Test
     public void testPromptPromptsThenReads() throws Exception {
-	java.io.Reader in = new StringReader("jabberwocky");
+	LineNumberReader in = new LineNumberReader(new StringReader("jabberwocky"));
 	Notify notify = mock(Notify.class);
 	Reader reader = mock(Reader.class);
 
@@ -30,7 +30,7 @@ public class PromptTest {
     @Test
     public void testPromptPassesInputToReader() throws Exception {
 	String input = "jabberwocky";
-	java.io.Reader in = new StringReader(input);
+	LineNumberReader in = new LineNumberReader(new StringReader(input));
 
 	Notify notify = mock(Notify.class);
 	Reader reader = mock(Reader.class);
@@ -44,7 +44,7 @@ public class PromptTest {
     @Test
     public void testPromptOnlyReadsToNewLine() throws Exception {
 	String input = "jabberwocky";
-	java.io.Reader in = new StringReader(input + "\n" + "arachnilobster");
+	LineNumberReader in = new LineNumberReader(new StringReader(input + "\n" + "arachnilobster"));
 	Notify notify = mock(Notify.class);
 	Reader reader = mock(Reader.class);
 
@@ -57,7 +57,7 @@ public class PromptTest {
     @Test
     public void testPromptReturnsWhatReadReturns() throws Exception {
 	String input = "jabberwocky";
-	java.io.Reader in = new StringReader(input + "\n" + "arachnilobster");
+	LineNumberReader in = new LineNumberReader(new StringReader(input + "\n" + "arachnilobster"));
 	Notify notify = mock(Notify.class);
 	Reader reader = mock(Reader.class);
 

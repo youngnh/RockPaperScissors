@@ -11,7 +11,7 @@ public class PlayerPromptTest {
     @Test
     public void testPlayerPromptPrintsMessage() throws Exception {
 	String expected = "Player 1 Name: ";
-	StringReader in = new StringReader("jabberwocky");
+	LineNumberReader in = new LineNumberReader(new StringReader("jabberwocky"));
 	StringWriter out = new StringWriter();
 
 	PlayerPrompt prompt = new PlayerPrompt(in, out, 1);
@@ -24,7 +24,7 @@ public class PlayerPromptTest {
     public void testPlayerHasNameGivenInInput() throws Exception {
 	String expected = "Player 1 Name: ";
 	String input = "jabberwocky";
-	StringReader in = new StringReader(input);
+	LineNumberReader in = new LineNumberReader(new StringReader(input));
 	StringWriter out = new StringWriter();
 
 	PlayerPrompt prompt = new PlayerPrompt(in, out, 1);

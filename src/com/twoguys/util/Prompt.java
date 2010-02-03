@@ -11,8 +11,8 @@ public class Prompt<T> {
     private Notify notify;
     private Reader<T> reader;
 
-    public Prompt(java.io.Reader in, Notify notify, Reader<T> reader) {
-	this.in = new LineNumberReader(in);
+    public Prompt(LineNumberReader in, Notify notify, Reader<T> reader) {
+	this.in = in;
 	this.notify = notify;
 	this.reader = reader;
     }

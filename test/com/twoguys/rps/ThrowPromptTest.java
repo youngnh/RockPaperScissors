@@ -11,7 +11,7 @@ public class ThrowPromptTest {
     @Test
     public void testThrowPromptPrintsMessage() throws Exception {
 	String expected = "[R]ock, [P]aper, or [S]cissors? ";
-	StringReader in = new StringReader("R");
+	LineNumberReader in = new LineNumberReader(new StringReader("R"));
 	StringWriter out = new StringWriter();
 
 	ThrowPrompt prompt = new ThrowPrompt(in, out);
@@ -20,11 +20,11 @@ public class ThrowPromptTest {
 	assertEquals(expected, out.toString());
     }
 
-     @Test
+    @Test
     public void testThrowPromptReturnsParsedThrows() throws Exception {
 	String expected = "Player 1 Name: ";
 	String input = "R\nP\nS";
-	StringReader in = new StringReader(input);
+	LineNumberReader in = new LineNumberReader(new StringReader(input));
 	StringWriter out = new StringWriter();
 
 	ThrowPrompt prompt = new ThrowPrompt(in, out);
