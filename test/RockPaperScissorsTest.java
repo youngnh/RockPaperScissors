@@ -1,5 +1,3 @@
-package com.twoguys.rps;
-
 import static org.junit.Assert.*;
 
 import java.io.*;

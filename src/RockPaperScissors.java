@@ -1,5 +1,4 @@
-package com.twoguys.rps;
-
+import com.twoguys.rps.*;
 import com.twoguys.util.*;
 import java.io.*;
 import java.util.*;
@@ -8,6 +7,15 @@ public class RockPaperScissors {
 
     private LineNumberReader in;
     private Writer out;
+
+    public static void main(String[] args) {
+	InputStreamReader stdin = new InputStreamReader(System.in);
+	LineNumberReader in = new LineNumberReader(stdin);
+	Writer out = new OutputStreamWriter(System.out);
+	
+	RockPaperScissors rps = new RockPaperScissors(in, out);
+	rps.run(args);
+    }
 
     public RockPaperScissors(LineNumberReader in, Writer out) {
 	this.in = in;
