@@ -53,7 +53,6 @@ public class RockPaperScissorsTest {
 	assertTrue(actual.length() > 0);
     }
 
-    @Ignore
     @Test
     public void testNoArgumentsResultsInSingleThrowGame() throws Exception {
 	Reader in = new FileReader("data/RockPaperScissorsTest/noargs_game.input");
@@ -63,13 +62,12 @@ public class RockPaperScissorsTest {
 	RockPaperScissors rps = new RockPaperScissors(in, out);
 	rps.run(args);
 
-	String expected = IOUtils.toString(new FileReader("data/RockPaperScissorsTest/noargs_game.expected"));
+	String expected = IOUtils.toString(new FileReader("data/RockPaperScissorsTest/noargs_game.expected")).replace("\n", "");
 
 	String actual = out.toString();
 	assertEquals(expected, actual);
     }
 
-    @Ignore
     @Test
     public void testFirstToGameResultsInBothPlayersPlaying() throws Exception {
 	Reader in = new FileReader("data/RockPaperScissorsTest/firstto_game.input");
@@ -79,13 +77,12 @@ public class RockPaperScissorsTest {
 	RockPaperScissors rps = new RockPaperScissors(in, out);
 	rps.run(args);
 
-	String expected = IOUtils.toString(new FileReader("data/RockPaperScissorsTest/firstto_game.expected"));
+	String expected = IOUtils.toString(new FileReader("data/RockPaperScissorsTest/firstto_game.expected")).replace("\n", "");
 
 	String actual = out.toString();
 	assertEquals(expected, actual);
     }
 
-    @Ignore
     @Test
     public void testBestOfStopsAfterPlayerWinsMoreThanHalf() throws Exception {
 	Reader in = new FileReader("data/RockPaperScissorsTest/bestof_game.input");
@@ -95,13 +92,12 @@ public class RockPaperScissorsTest {
 	RockPaperScissors rps = new RockPaperScissors(in, out);
 	rps.run(args);
 
-	String expected = IOUtils.toString(new FileReader("data/RockPaperScissorsTest/bestof_game.expected"));
+	String expected = IOUtils.toString(new FileReader("data/RockPaperScissorsTest/bestof_game.expected")).replace("\n", "");
 
 	String actual = out.toString();
 	assertEquals(expected, actual);
     }
 
-    @Ignore
     @Test
     public void testWinByGameContinuesUntilOnePlayerBeatsOtherByMargin() throws Exception {
 	Reader in = new FileReader("data/RockPaperScissorsTest/winby_game.input");
@@ -111,7 +107,22 @@ public class RockPaperScissorsTest {
 	RockPaperScissors rps = new RockPaperScissors(in, out);
 	rps.run(args);
 
-	String expected = IOUtils.toString(new FileReader("data/RockPaperScissorsTest/winby_game.expected"));
+	String expected = IOUtils.toString(new FileReader("data/RockPaperScissorsTest/winby_game.expected")).replace("\n", "");
+
+	String actual = out.toString();
+	assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testNateWins() throws Exception {
+	Reader in = new FileReader("data/RockPaperScissorsTest/nate_wins.input");
+	Writer out = new StringWriter();
+
+	String[] args = { };
+	RockPaperScissors rps = new RockPaperScissors(in, out);
+	rps.run(args);
+
+	String expected = IOUtils.toString(new FileReader("data/RockPaperScissorsTest/nate_wins.expected")).replace("\n", "");
 
 	String actual = out.toString();
 	assertEquals(expected, actual);
