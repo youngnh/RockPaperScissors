@@ -10,7 +10,7 @@ public class RockPaperScissorsTest {
 
     @Test
     public void testNothingOutputIfRPSNotRun() {
-	StringReader in = new StringReader("");
+	LineNumberReader in = new LineNumberReader(new StringReader(""));
 	StringWriter out = new StringWriter();
 
 	String[] args = { "-jabberwocky" };
@@ -22,7 +22,7 @@ public class RockPaperScissorsTest {
 
     @Test
     public void testDisplaysUsageWithBogusArgs() {
-	StringReader in = new StringReader("");
+	LineNumberReader in = new LineNumberReader(new StringReader(""));
 	StringWriter out = new StringWriter();
 
 	String[] args = { "-jabberwocky" };
@@ -40,7 +40,7 @@ public class RockPaperScissorsTest {
 
     @Test
     public void testIOExceptionResultsInSomeKindOfOutput() throws Exception {
-	StringReader in = new StringReader("");
+	LineNumberReader in = new LineNumberReader(new StringReader(""));
 	Writer out = new ExceptionProneWriter();
 
 	String[] args = {};
@@ -55,7 +55,8 @@ public class RockPaperScissorsTest {
 
     @Test
     public void testNoArgumentsResultsInSingleThrowGame() throws Exception {
-	Reader in = new FileReader("data/RockPaperScissorsTest/noargs_game.input");
+	Reader file = new FileReader("data/RockPaperScissorsTest/noargs_game.input");
+	LineNumberReader in = new LineNumberReader(file);
 	Writer out = new StringWriter();
 
 	String[] args = {};
@@ -70,7 +71,8 @@ public class RockPaperScissorsTest {
 
     @Test
     public void testFirstToGameResultsInBothPlayersPlaying() throws Exception {
-	Reader in = new FileReader("data/RockPaperScissorsTest/firstto_game.input");
+	Reader file = new FileReader("data/RockPaperScissorsTest/firstto_game.input");
+	LineNumberReader in = new LineNumberReader(file);
 	Writer out = new StringWriter();
 
 	String[] args = { "-to", "3" };
@@ -85,7 +87,8 @@ public class RockPaperScissorsTest {
 
     @Test
     public void testBestOfStopsAfterPlayerWinsMoreThanHalf() throws Exception {
-	Reader in = new FileReader("data/RockPaperScissorsTest/bestof_game.input");
+	Reader file = new FileReader("data/RockPaperScissorsTest/bestof_game.input");
+	LineNumberReader in = new LineNumberReader(file);
 	Writer out = new StringWriter();
 
 	String[] args = { "-bestof", "5" };
@@ -100,7 +103,8 @@ public class RockPaperScissorsTest {
 
     @Test
     public void testWinByGameContinuesUntilOnePlayerBeatsOtherByMargin() throws Exception {
-	Reader in = new FileReader("data/RockPaperScissorsTest/winby_game.input");
+	Reader file = new FileReader("data/RockPaperScissorsTest/winby_game.input");
+	LineNumberReader in = new LineNumberReader(file);
 	Writer out = new StringWriter();
 
 	String[] args = { "-to", "3", "-by", "2" };
@@ -115,7 +119,8 @@ public class RockPaperScissorsTest {
 
     @Test
     public void testNateWins() throws Exception {
-	Reader in = new FileReader("data/RockPaperScissorsTest/nate_wins.input");
+	Reader file = new FileReader("data/RockPaperScissorsTest/nate_wins.input");
+	LineNumberReader in = new LineNumberReader(file);
 	Writer out = new StringWriter();
 
 	String[] args = { };

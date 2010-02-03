@@ -9,8 +9,8 @@ public class RockPaperScissors {
     private LineNumberReader in;
     private Writer out;
 
-    public RockPaperScissors(java.io.Reader in, Writer out) {
-	this.in = new LineNumberReader(in);
+    public RockPaperScissors(LineNumberReader in, Writer out) {
+	this.in = in;
 	this.out = out;
     }
 
