@@ -8,6 +8,11 @@ import org.hamcrest.*;
 
 public class WinLogicFactory {
 
+    private static final String USAGE = 
+	"usage: \tRockPaperScissors -to x\n" +
+	"       \tRockPaperScissors -to to -by by\n" +
+	"       \tRockPaperScissors -bestof x\n";
+
     private static List<Pair<Matcher, WinLogicInternalFactory>> matchers;
 
     static {
@@ -29,7 +34,7 @@ public class WinLogicFactory {
 		return factory.create(args);
 	    }
 	}
-	return new Left("boo");
+	return new Left(USAGE);
     }
 
     public static WinLogicInternalFactory firstTo() {
