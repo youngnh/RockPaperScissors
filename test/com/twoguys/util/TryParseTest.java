@@ -9,6 +9,14 @@ import org.junit.*;
 public class TryParseTest {
 
     @Test
+    public void testNoParsesGivenReturnsEmptyParses() {
+	TryParse tryParse = new TryParse();
+	List<Pair<Throw, String>> result = tryParse.read("jabberwocky");
+
+	assertEquals(0, result.size());
+    }
+
+    @Test
     public void testEmptyListReturnsEmptyParses() {
 	List<Pair<String, Throw>> tries = new ArrayList<Pair<String, Throw>>();
 
@@ -25,6 +33,18 @@ public class TryParseTest {
 	tries.add(new Pair<String, Throw>("R", rock));
 
 	TryParse tryParse = new TryParse(tries);
+	List<Pair<Throw, String>> result = tryParse.read("Rjabberwocky");
+
+	assertEquals(1, result.size());
+	assertSame(rock, result.get(0).a);
+    }
+
+    @Test
+    public void testSingleAddedParseWithMatchingStartReturnsGiven() {
+	TryParse<Throw> tryParse = new TryParse<Throw>();
+	Rock rock = new Rock();
+	tryParse.attempt("R", rock);
+
 	List<Pair<Throw, String>> result = tryParse.read("Rjabberwocky");
 
 	assertEquals(1, result.size());

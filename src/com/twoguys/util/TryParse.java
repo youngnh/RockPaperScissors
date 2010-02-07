@@ -6,8 +6,16 @@ public class TryParse<T> implements Read<T> {
 
     private List<Pair<String, T>> possible;
 
+    public TryParse() {
+	this.possible = new ArrayList<Pair<String, T>>();
+    }
+
     public TryParse(List<Pair<String, T>> possible) {
 	this.possible = possible;
+    }
+
+    public void attempt(String prefix, T result) {
+	possible.add(new Pair<String, T>(prefix, result));
     }
 
     public List<Pair<T, String>> read(String str) {
