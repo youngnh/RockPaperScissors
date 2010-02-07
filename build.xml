@@ -4,9 +4,9 @@
   <property name="lib" location="lib" />
   <property name="build" location="build" />
   <property name="dist" location="dist" />
+  <property name="dist.lib" location="${dist}/lib" />
   <property name="classes" location="${build}/classes" />
   <property name="test.classes" location="${build}/test-classes" />
-  <property name="test.report" location="${build}/reports" />
 
   <target name="init">
     <tstamp />
@@ -15,8 +15,8 @@
     <mkdir dir="${lib}" />
     <mkdir dir="${classes}" />
     <mkdir dir="${test.classes}" />
-    <mkdir dir="${test.report}" />
     <mkdir dir="${dist}" />
+    <mkdir dir="${dist.lib}" />
   </target>
 
   <path id="class.path">
@@ -45,7 +45,7 @@
   <target name="test" depends="compile">
     <junit printsummary="on" haltonerror="true" haltonfailure="true">
       <classpath refid="class.path" />
-      <batchtest todir="${test.report}">
+      <batchtest>
 	<formatter type="plain" usefile="false" />
 	<fileset dir="${test}">
 	  <include name="**/*Test.java"/>
@@ -56,10 +56,19 @@
   </target>
 
   <target name="dist" depends="test">
-    <jar destfile="${dist}/${ant.project.name}-${DSTAMP}.jar" basedir="${classes}"/>
+    <copy file="${lib}/hamcrest-all-1.1.jar" todir="${dist.lib}" />
+    <jar destfile="${dist}/${ant.project.name}-${DSTAMP}.jar">
+      <fileset dir="${classes}" />
+      <fileset dir="${lib}" />
+      <manifest>
+	<attribute name="Main-Class" value="RockPaperScissors" />
+	<attribute name="Class-Path" value="lib/hamcrest-all-1.1.jar" />
+      </manifest>
+    </jar>
   </target>
 
   <target name="clean">
     <delete dir="${build}" />
+    <delete dir="${dist}" />
   </target>
 </project>
