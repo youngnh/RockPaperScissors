@@ -10,6 +10,9 @@
 
   <target name="init">
     <tstamp />
+    <mkdir dir="${src}" />
+    <mkdir dir="${test}" />
+    <mkdir dir="${lib}" />
     <mkdir dir="${classes}" />
     <mkdir dir="${test.classes}" />
     <mkdir dir="${test.report}" />
@@ -43,9 +46,10 @@
     <junit printsummary="on" haltonerror="true" haltonfailure="true">
       <classpath refid="class.path" />
       <batchtest todir="${test.report}">
-	<formatter type="plain" />
+	<formatter type="plain" usefile="false" />
 	<fileset dir="${test}">
 	  <include name="**/*Test.java"/>
+	  <exclude name="**/*AbstractTest.java"/>
 	</fileset>
       </batchtest>
     </junit>

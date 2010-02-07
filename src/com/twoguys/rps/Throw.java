@@ -10,5 +10,10 @@ public abstract class Throw {
 	}
     }
 
+    @Override
+    public boolean equals(Object other) {
+	return getClass() == other.getClass();
+    }
+
     public abstract Class<? extends Throw> getPwns();
 }
