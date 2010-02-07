@@ -6,14 +6,14 @@ import static org.mockito.Mockito.*;
 import java.io.*;
 import org.junit.*;
 
-public class NotifyTest {
+public class PutStrToTest {
 
     @Test
     public void testOutputWrittenOnWrite() {
-	StringWriter out = new StringWriter();
+	ByteArrayOutputStream out = new ByteArrayOutputStream();
 
 	String message = "here's looking at you, kid";
-	Notify notify = new Notify(out, message);
+	Print notify = new PutStrTo(new PrintStream(out), message);
 	notify.print();
 
 	String actual = out.toString();
@@ -22,10 +22,10 @@ public class NotifyTest {
 
     @Test
     public void testOutputFlushedOnWrite() throws Exception {
-	Writer out = mock(Writer.class);
+	PrintStream out = mock(PrintStream.class);
 
 	String message = "wonder boy and young nasty man";
-	Notify notify = new Notify(out, message);
+	Print notify = new PutStrTo(out, message);
 	notify.print();
 
 	verify(out).flush();
@@ -33,10 +33,10 @@ public class NotifyTest {
 
     @Test
     public void testMessageNotWrittenUntilInvoked() {
-	StringWriter out = new StringWriter();
+	ByteArrayOutputStream out = new ByteArrayOutputStream();
 
 	String message = "beam me up, scotty";
-	Notify notify = new Notify(out, message);
+	Print notify = new PutStrTo(new PrintStream(out), message);
 
 	assertEquals("", out.toString());
     }
