@@ -1,2 +1,5 @@
 build/*
 dist/*
+*.hi
+*.o
+RockPaperScissors
