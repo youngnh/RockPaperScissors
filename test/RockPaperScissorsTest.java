@@ -65,6 +65,7 @@ public class RockPaperScissorsTest {
 	rps.run(args);
 
 	String expected = IOUtils.toString(new FileInputStream("data/RockPaperScissorsTest/noargs_game.expected")).replace("\n", "");
+	expected += "\n";
 
 	String actual = out.toString();
 	assertEquals(expected, actual);
@@ -81,6 +82,7 @@ public class RockPaperScissorsTest {
 	rps.run(args);
 
 	String expected = IOUtils.toString(new FileInputStream("data/RockPaperScissorsTest/firstto_game.expected")).replace("\n", "");
+	expected += "\n";
 
 	String actual = out.toString();
 	assertEquals(expected, actual);
@@ -97,6 +99,7 @@ public class RockPaperScissorsTest {
 	rps.run(args);
 
 	String expected = IOUtils.toString(new FileInputStream("data/RockPaperScissorsTest/bestof_game.expected")).replace("\n", "");
+	expected += "\n";
 
 	String actual = out.toString();
 	assertEquals(expected, actual);
@@ -113,6 +116,7 @@ public class RockPaperScissorsTest {
 	rps.run(args);
 
 	String expected = IOUtils.toString(new FileInputStream("data/RockPaperScissorsTest/winby_game.expected")).replace("\n", "");
+	expected += "\n";
 
 	String actual = out.toString();
 	assertEquals(expected, actual);
@@ -129,6 +133,7 @@ public class RockPaperScissorsTest {
 	rps.run(args);
 
 	String expected = IOUtils.toString(new FileInputStream("data/RockPaperScissorsTest/nate_wins.expected")).replace("\n", "");
+	expected += "\n";
 
 	String actual = out.toString();
 	assertEquals(expected, actual);
