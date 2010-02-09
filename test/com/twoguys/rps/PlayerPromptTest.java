@@ -11,10 +11,11 @@ public class PlayerPromptTest {
     @Test
     public void testPlayerPromptPrintsMessage() throws Exception {
 	String expected = "Player 1 Name: ";
-	LineNumberReader in = new LineNumberReader(new StringReader("jabberwocky"));
-	StringWriter out = new StringWriter();
+	InputStream instream = new ByteArrayInputStream("jabberwocky".getBytes());
+	LineNumberReader in = new LineNumberReader(new InputStreamReader(instream));
+	ByteArrayOutputStream out = new ByteArrayOutputStream();
 
-	PlayerPrompt prompt = new PlayerPrompt(in, out, 1);
+	PlayerPrompt prompt = new PlayerPrompt(in, new PrintStream(out), 1);
 	prompt.prompt();
 
 	assertEquals(expected, out.toString());
@@ -24,10 +25,11 @@ public class PlayerPromptTest {
     public void testPlayerHasNameGivenInInput() throws Exception {
 	String expected = "Player 1 Name: ";
 	String input = "jabberwocky";
-	LineNumberReader in = new LineNumberReader(new StringReader(input));
-	StringWriter out = new StringWriter();
+	InputStream instream = new ByteArrayInputStream(input.getBytes());
+	LineNumberReader in = new LineNumberReader(new InputStreamReader(instream));
+	ByteArrayOutputStream out = new ByteArrayOutputStream();
 
-	PlayerPrompt prompt = new PlayerPrompt(in, out, 1);
+	PlayerPrompt prompt = new PlayerPrompt(in, new PrintStream(out), 1);
 	Player player = prompt.prompt();
 
 	assertEquals(input, player.getName());

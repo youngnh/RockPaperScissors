@@ -6,10 +6,10 @@ import java.util.*;
 
 public class AllThrows implements Iterator<Throw> {
 
-    private Prompt<Throw> prompt;
+    private PromptForFrom<Throw> prompt;
     private Throw next;
 
-    public AllThrows(Prompt<Throw> prompt) {
+    public AllThrows(PromptForFrom<Throw> prompt) {
 	this.prompt = prompt;
     }
 

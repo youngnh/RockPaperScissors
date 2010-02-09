@@ -10,17 +10,18 @@ import java.util.*;
 import org.junit.*;
 import org.mockito.*;
 
-public class PromptTest {
+public class PromptForFromTest {
 
     @Test
     public void testPromptPromptsThenReads() throws Exception {
-	LineNumberReader in = new LineNumberReader(new StringReader("jabberwocky"));
-	Notify notify = mock(Notify.class);
+	InputStream instream = new ByteArrayInputStream("jabberwocky".getBytes());
+	LineNumberReader in = new LineNumberReader(new InputStreamReader(instream));
+	Print notify = mock(Print.class);
 	Reader reader = mock(Reader.class);
 
 	InOrder inOrder = inOrder(notify, reader);
 
-	Prompt prompt = new Prompt(in, notify, reader);
+	PromptForFrom prompt = new PromptForFrom(in, notify, reader);
 	prompt.prompt();
 
 	inOrder.verify(notify).print();
@@ -30,12 +31,13 @@ public class PromptTest {
     @Test
     public void testPromptPassesInputToReader() throws Exception {
 	String input = "jabberwocky";
-	LineNumberReader in = new LineNumberReader(new StringReader(input));
+	InputStream instream = new ByteArrayInputStream(input.getBytes());
+	LineNumberReader in = new LineNumberReader(new InputStreamReader(instream));
 
-	Notify notify = mock(Notify.class);
+	Print notify = mock(Print.class);
 	Reader reader = mock(Reader.class);
 
-	Prompt prompt = new Prompt(in, notify, reader);
+	PromptForFrom prompt = new PromptForFrom(in, notify, reader);
 	prompt.prompt();
 
 	verify(reader).read(input);
@@ -44,11 +46,12 @@ public class PromptTest {
     @Test
     public void testPromptOnlyReadsToNewLine() throws Exception {
 	String input = "jabberwocky";
-	LineNumberReader in = new LineNumberReader(new StringReader(input + "\n" + "arachnilobster"));
-	Notify notify = mock(Notify.class);
+	InputStream instream = new ByteArrayInputStream((input + "\n" + "arachnilobster").getBytes());
+	LineNumberReader in = new LineNumberReader(new InputStreamReader(instream));
+	Print notify = mock(Print.class);
 	Reader reader = mock(Reader.class);
 
-	Prompt prompt = new Prompt(in, notify, reader);
+	PromptForFrom prompt = new PromptForFrom(in, notify, reader);
 	prompt.prompt();
 
 	verify(reader).read(input);
@@ -57,14 +60,15 @@ public class PromptTest {
     @Test
     public void testPromptReturnsWhatReadReturns() throws Exception {
 	String input = "jabberwocky";
-	LineNumberReader in = new LineNumberReader(new StringReader(input + "\n" + "arachnilobster"));
-	Notify notify = mock(Notify.class);
+	InputStream instream = new ByteArrayInputStream((input + "\n" + "arachnilobster").getBytes());
+	LineNumberReader in = new LineNumberReader(new InputStreamReader(instream));
+	Print notify = mock(Print.class);
 	Reader reader = mock(Reader.class);
 
 	Object mockObject = mock(Object.class);
 	when(reader.read(input)).thenReturn(mockObject);
 
-	Prompt prompt = new Prompt(in, notify, reader);
+	PromptForFrom prompt = new PromptForFrom(in, notify, reader);
 	Object actual = prompt.prompt();
 	
 	assertSame(mockObject, actual);

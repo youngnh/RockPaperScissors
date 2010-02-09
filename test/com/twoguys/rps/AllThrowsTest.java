@@ -12,7 +12,7 @@ public class AllThrowsTest {
 
     @Test
     public void testHasNextPromptsTheUser() throws Exception {
-	Prompt<Throw> prompt = mock(Prompt.class);
+	PromptForFrom<Throw> prompt = mock(PromptForFrom.class);
 	AllThrows all = new AllThrows(prompt);
 
 	all.hasNext();
@@ -21,8 +21,8 @@ public class AllThrowsTest {
     }
 
     @Test
-    public void testHasNextReturnsFalseIfPromptThrowsException() throws Exception {
-	Prompt<Throw> prompt = mock(Prompt.class);
+    public void testHasNextReturnsFalseIfPromptForFromThrowsException() throws Exception {
+	PromptForFrom<Throw> prompt = mock(PromptForFrom.class);
 	when(prompt.prompt()).thenThrow(new ParseException("yarg", 0));
 	
 	AllThrows all = new AllThrows(prompt);
@@ -31,8 +31,8 @@ public class AllThrowsTest {
     }
 
     @Test
-    public void theNextInvokesPromptIfHasNextHasntBeenCalled() throws Exception {
-	Prompt<Throw> prompt = mock(Prompt.class);
+    public void theNextInvokesPromptForFromIfHasNextHasntBeenCalled() throws Exception {
+	PromptForFrom<Throw> prompt = mock(PromptForFrom.class);
 	
 	AllThrows all = new AllThrows(prompt);
 	all.next();
@@ -41,8 +41,8 @@ public class AllThrowsTest {
     }
 
     @Test
-    public void testPromptOnlyCalledASingleTimeForConsecutiveHasNextNextCalls() throws Exception {
-	Prompt<Throw> prompt = mock(Prompt.class);
+    public void testPromptForFromOnlyCalledASingleTimeForConsecutiveHasNextNextCalls() throws Exception {
+	PromptForFrom<Throw> prompt = mock(PromptForFrom.class);
 	when(prompt.prompt()).thenReturn(new Rock());
 
 	AllThrows all = new AllThrows(prompt);
@@ -54,8 +54,8 @@ public class AllThrowsTest {
     }
 
     @Test
-    public void testNextReturnsResultOfPrompt() throws Exception {
-	Prompt<Throw> prompt = mock(Prompt.class);
+    public void testNextReturnsResultOfPromptForFrom() throws Exception {
+	PromptForFrom<Throw> prompt = mock(PromptForFrom.class);
 	Throw rock = new Rock();
 	when(prompt.prompt()).thenReturn(rock);
 
@@ -66,8 +66,8 @@ public class AllThrowsTest {
     }
 
     @Test
-    public void testNextReturnsResultOfHasNextPrompt() throws Exception {
-	Prompt<Throw> prompt = mock(Prompt.class);
+    public void testNextReturnsResultOfHasNextPromptForFrom() throws Exception {
+	PromptForFrom<Throw> prompt = mock(PromptForFrom.class);
 	Throw rock = new Rock();
 	when(prompt.prompt()).thenReturn(rock).thenThrow(new ParseException("booga", 0));
 

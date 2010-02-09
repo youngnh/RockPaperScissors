@@ -8,24 +8,26 @@ public class RockPaperScissorsTest {
 
     @Test
     public void testNothingOutputIfRPSNotRun() {
-	LineNumberReader in = new LineNumberReader(new StringReader(""));
-	StringWriter out = new StringWriter();
+	InputStream instream = new ByteArrayInputStream("".getBytes());
+	LineNumberReader in = new LineNumberReader(new InputStreamReader(instream));
+	ByteArrayOutputStream out = new ByteArrayOutputStream();
 
 	String[] args = { "-jabberwocky" };
 
-	RockPaperScissors rps = new RockPaperScissors(in, out);
+	RockPaperScissors rps = new RockPaperScissors(in, new PrintStream(out));
 
 	assertEquals("", out.toString());
     }
 
     @Test
     public void testDisplaysUsageWithBogusArgs() {
-	LineNumberReader in = new LineNumberReader(new StringReader(""));
-	StringWriter out = new StringWriter();
+	InputStream instream = new ByteArrayInputStream("".getBytes());
+	LineNumberReader in = new LineNumberReader(new InputStreamReader(instream));
+	ByteArrayOutputStream out = new ByteArrayOutputStream();
 
 	String[] args = { "-jabberwocky" };
 
-	RockPaperScissors rps = new RockPaperScissors(in, out);
+	RockPaperScissors rps = new RockPaperScissors(in, new PrintStream(out));
 	rps.run(args);
 
 	String usage = 
@@ -38,12 +40,13 @@ public class RockPaperScissorsTest {
 
     @Test
     public void testIOExceptionResultsInSomeKindOfOutput() throws Exception {
-	LineNumberReader in = new LineNumberReader(new StringReader(""));
-	Writer out = new ExceptionProneWriter();
+	InputStream instream = new ByteArrayInputStream("".getBytes());
+	LineNumberReader in = new LineNumberReader(new InputStreamReader(instream));
+	OutputStream out = new ExceptionProneStream();
 
 	String[] args = {};
 
-	RockPaperScissors rps = new RockPaperScissors(in, out);
+	RockPaperScissors rps = new RockPaperScissors(in, new PrintStream(out));
 	rps.run(args);
 
 	String actual = out.toString();
@@ -53,15 +56,15 @@ public class RockPaperScissorsTest {
 
     @Test
     public void testNoArgumentsResultsInSingleThrowGame() throws Exception {
-	Reader file = new FileReader("data/RockPaperScissorsTest/noargs_game.input");
-	LineNumberReader in = new LineNumberReader(file);
-	Writer out = new StringWriter();
+	InputStream instream = new FileInputStream("data/RockPaperScissorsTest/noargs_game.input");
+	LineNumberReader in = new LineNumberReader(new InputStreamReader(instream));
+	OutputStream out = new ByteArrayOutputStream();
 
 	String[] args = {};
-	RockPaperScissors rps = new RockPaperScissors(in, out);
+	RockPaperScissors rps = new RockPaperScissors(in, new PrintStream(out));
 	rps.run(args);
 
-	String expected = IOUtils.toString(new FileReader("data/RockPaperScissorsTest/noargs_game.expected")).replace("\n", "");
+	String expected = IOUtils.toString(new FileInputStream("data/RockPaperScissorsTest/noargs_game.expected")).replace("\n", "");
 
 	String actual = out.toString();
 	assertEquals(expected, actual);
@@ -69,15 +72,15 @@ public class RockPaperScissorsTest {
 
     @Test
     public void testFirstToGameResultsInBothPlayersPlaying() throws Exception {
-	Reader file = new FileReader("data/RockPaperScissorsTest/firstto_game.input");
-	LineNumberReader in = new LineNumberReader(file);
-	Writer out = new StringWriter();
+	InputStream instream = new FileInputStream("data/RockPaperScissorsTest/firstto_game.input");
+	LineNumberReader in = new LineNumberReader(new InputStreamReader(instream));
+	OutputStream out = new ByteArrayOutputStream();
 
 	String[] args = { "-to", "3" };
-	RockPaperScissors rps = new RockPaperScissors(in, out);
+	RockPaperScissors rps = new RockPaperScissors(in, new PrintStream(out));
 	rps.run(args);
 
-	String expected = IOUtils.toString(new FileReader("data/RockPaperScissorsTest/firstto_game.expected")).replace("\n", "");
+	String expected = IOUtils.toString(new FileInputStream("data/RockPaperScissorsTest/firstto_game.expected")).replace("\n", "");
 
 	String actual = out.toString();
 	assertEquals(expected, actual);
@@ -85,15 +88,15 @@ public class RockPaperScissorsTest {
 
     @Test
     public void testBestOfStopsAfterPlayerWinsMoreThanHalf() throws Exception {
-	Reader file = new FileReader("data/RockPaperScissorsTest/bestof_game.input");
-	LineNumberReader in = new LineNumberReader(file);
-	Writer out = new StringWriter();
+	InputStream instream = new FileInputStream("data/RockPaperScissorsTest/bestof_game.input");
+	LineNumberReader in = new LineNumberReader(new InputStreamReader(instream));
+	OutputStream out = new ByteArrayOutputStream();
 
 	String[] args = { "-bestof", "5" };
-	RockPaperScissors rps = new RockPaperScissors(in, out);
+	RockPaperScissors rps = new RockPaperScissors(in, new PrintStream(out));
 	rps.run(args);
 
-	String expected = IOUtils.toString(new FileReader("data/RockPaperScissorsTest/bestof_game.expected")).replace("\n", "");
+	String expected = IOUtils.toString(new FileInputStream("data/RockPaperScissorsTest/bestof_game.expected")).replace("\n", "");
 
 	String actual = out.toString();
 	assertEquals(expected, actual);
@@ -101,15 +104,15 @@ public class RockPaperScissorsTest {
 
     @Test
     public void testWinByGameContinuesUntilOnePlayerBeatsOtherByMargin() throws Exception {
-	Reader file = new FileReader("data/RockPaperScissorsTest/winby_game.input");
-	LineNumberReader in = new LineNumberReader(file);
-	Writer out = new StringWriter();
+	InputStream instream = new FileInputStream("data/RockPaperScissorsTest/winby_game.input");
+	LineNumberReader in = new LineNumberReader(new InputStreamReader(instream));
+	OutputStream out = new ByteArrayOutputStream();
 
 	String[] args = { "-to", "3", "-by", "2" };
-	RockPaperScissors rps = new RockPaperScissors(in, out);
+	RockPaperScissors rps = new RockPaperScissors(in, new PrintStream(out));
 	rps.run(args);
 
-	String expected = IOUtils.toString(new FileReader("data/RockPaperScissorsTest/winby_game.expected")).replace("\n", "");
+	String expected = IOUtils.toString(new FileInputStream("data/RockPaperScissorsTest/winby_game.expected")).replace("\n", "");
 
 	String actual = out.toString();
 	assertEquals(expected, actual);
@@ -117,24 +120,24 @@ public class RockPaperScissorsTest {
 
     @Test
     public void testNateWins() throws Exception {
-	Reader file = new FileReader("data/RockPaperScissorsTest/nate_wins.input");
-	LineNumberReader in = new LineNumberReader(file);
-	Writer out = new StringWriter();
+	InputStream instream = new FileInputStream("data/RockPaperScissorsTest/nate_wins.input");
+	LineNumberReader in = new LineNumberReader(new InputStreamReader(instream));
+	OutputStream out = new ByteArrayOutputStream();
 
 	String[] args = { };
-	RockPaperScissors rps = new RockPaperScissors(in, out);
+	RockPaperScissors rps = new RockPaperScissors(in, new PrintStream(out));
 	rps.run(args);
 
-	String expected = IOUtils.toString(new FileReader("data/RockPaperScissorsTest/nate_wins.expected")).replace("\n", "");
+	String expected = IOUtils.toString(new FileInputStream("data/RockPaperScissorsTest/nate_wins.expected")).replace("\n", "");
 
 	String actual = out.toString();
 	assertEquals(expected, actual);
     }
 
-    class ExceptionProneWriter extends Writer {
+    class ExceptionProneStream extends OutputStream {
 
 	private boolean crashed = false;
-	private StringWriter writer = new StringWriter();
+	private ByteArrayOutputStream writer = new ByteArrayOutputStream();
 
 	@Override
 	public void close() throws IOException {
@@ -142,26 +145,25 @@ public class RockPaperScissorsTest {
 	}
 
 	@Override
-	public void flush() {
+	public void flush() throws IOException {
 	    writer.flush();
 	}
 
 	@Override
-	public void write(char[] cbuf, int off, int len) {
-	    writer.write(cbuf, off, len);
+	public void write(int b) {
+	    writer.write(b);
 	}
 
 	@Override
-	public void write(String str) throws IOException {
+	public void write(byte[] b, int off, int len) throws IOException {
 	    if(!crashed) {
 		crashed = true;
 		throw new IOException("Guess I'm just crashy...");
 	    } else {
-		writer.write(str);
+		writer.write(b, off, len);
 	    }
 	}
 
-	@Override
 	public String toString() {
 	    return writer.toString();
 	}

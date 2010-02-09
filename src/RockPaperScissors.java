@@ -6,18 +6,18 @@ import java.util.*;
 public class RockPaperScissors {
 
     private LineNumberReader in;
-    private Writer out;
+    private PrintStream out;
 
     public static void main(String[] args) {
 	InputStreamReader stdin = new InputStreamReader(System.in);
 	LineNumberReader in = new LineNumberReader(stdin);
-	Writer out = new OutputStreamWriter(System.out);
+	PrintStream out = System.out;
 	
 	RockPaperScissors rps = new RockPaperScissors(in, out);
 	rps.run(args);
     }
 
-    public RockPaperScissors(LineNumberReader in, Writer out) {
+    public RockPaperScissors(LineNumberReader in, PrintStream out) {
 	this.in = in;
 	this.out = out;
     }
@@ -27,7 +27,7 @@ public class RockPaperScissors {
 	    Either<String, WinLogic> logicOrError = WinLogicFactory.create(args);
 
 	    if(logicOrError.left() != null) {
-		out.write(logicOrError.left());
+		out.print(logicOrError.left());
 	    } else {
 		WinLogic logic = logicOrError.right();
 
@@ -46,7 +46,8 @@ public class RockPaperScissors {
 		Game game = new Game(logic, p1, p2);
 		Player winner = game.play();
 
-		out.write(winner.getName() + " Wins!");
+		out.print(winner.getName() + " Wins!\n");
+		out.flush();
 	    }
 	} catch(Exception e) {
 	    e.printStackTrace(new PrintWriter(out));
