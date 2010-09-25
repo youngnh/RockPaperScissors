@@ -137,3 +137,21 @@
       (is (= "Ghandi" (test-fn [5 4] ["Ghandi" "Lincoln"])))
       (is (= "Lincoln" (test-fn [6 7] ["Ghandi" "Lincoln"])))
       (is (nil? (test-fn [8 8] ["Ghandi" "Lincoln"]))))))
+
+(deftest test-win-by
+  (let [test-fn (win-by 2 :to 10)]
+    (testing "exact"
+      (is (= "Ghandi" (test-fn [10 8] ["Ghandi" "Lincoln"])))
+      (is (= "Lincoln" (test-fn [8 10] ["Ghandi" "Lincoln"]))))
+
+    (testing "no one wins"
+      (are [score] (nil? (test-fn score ["Ghandi" "Lincoln"]))
+	   [0 0] [1 1] [3 5] [9 9] [10 10]))
+
+    (testing "must have more than your opponent"
+      (is (= "Ghandi" (test-fn [15 13] ["Ghandi" "Lincoln"])))
+      (is (= "Ghandi" (test-fn [11 9] ["Ghandi" "Lincoln"])))
+      (is (= "Lincoln" (test-fn [15 19] ["Ghandi" "Lincoln"])))
+      (is (= "Lincoln" (test-fn [17 19] ["Ghandi" "Lincoln"])))
+      (is (nil? (test-fn [18 19] ["Ghandi" "Lincoln"])))
+      (is (nil? (test-fn [19 19] ["Ghandi" "Lincoln"]))))))

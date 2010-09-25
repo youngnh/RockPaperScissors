@@ -27,18 +27,16 @@
 (defn play-round-and-score [scores]
   (map + scores (play-round)))
 
-(defn first-to [n]
+(defn win-by [by _ n]
   (fn [[p1score p2score] [player1 player2]]
     (cond (and (>= p1score n)
-	       (> p1score p2score)) player1
+	       (>= (- p1score p2score) by)) player1
 	  (and (>= p2score n)
-	       (> p2score p1score)) player2)))
+	       (>= (- p2score p1score) by)) player2)))
 
 (defn best-of [n] (first-to (inc (quot n 2))))
 
-(defn win-by [by _ n]
-  (fn [[p1score p2score] [player1 player2]]
-    true))
+(defn first-to [n] (win-by 1 :to n))
 
 (defn rps
   ([] (rps (first-to 1)))
