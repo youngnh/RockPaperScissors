@@ -6,13 +6,23 @@
   (:import [java.io StringReader StringWriter]))
 
 (deftest test-scripted-games
-  (let [string-writer (StringWriter.)
-	expected (.. (slurp "data/RockPaperScissorsTest/firstto_game.expected")
-		     (replace "\n" ""))]
-   (binding [*in* (reader "data/RockPaperScissorsTest/firstto_game.input")
-	     *out* string-writer]
-     (rps)
-     (is (= expected (.toString string-writer))))))
+  (are [filename]
+       (let [data-folder "data/RockPaperScissorsTest/"
+	     expected-output-file (str data-folder filename ".expected")
+	     input-file (str data-folder filename ".input")
+	     string-writer (StringWriter.)
+	     expected (.. (slurp expected-output-file)
+			  (replace "\n" ""))]
+	 (binding [*in* (reader input-file)
+		   *out* string-writer]
+	   (rps)
+	   (= expected (.toString string-writer))))
+
+       "bestof_game"
+       "firstto_game"
+       "nate_wins"
+       "noargs_game"
+       "winby_game"))
 
 (deftest test-prompt-for-username
   (let [string-writer (StringWriter.)]
@@ -40,15 +50,15 @@
 (deftest test-beats
   (testing "R > S > P > R"
     (are [throw other] (beats throw other)
-	 [:rock :scissors]
-	 [:scissors :paper]
-	 [:paper :rock]))
+	 :rock :scissors
+	 :scissors :paper
+	 :paper :rock))
 
   (testing "R < P < S < R"
     (are [throw other] (not (beats throw other))
-	 [:rock :paper]
-	 [:paper :scissors]
-	 [:scissors :rock])))
+	 :rock :paper
+	 :paper :scissors
+	 :scissors :rock)))
 
 (deftest test-play-round
   (testing "prompts both players for a throw"
