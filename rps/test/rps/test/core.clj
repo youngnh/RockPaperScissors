@@ -16,7 +16,7 @@
 	 (binding [*in* (reader input-file)
 		   *out* string-writer]
 	   (rps)
-	   (= expected (.toString string-writer))))
+	   (= expected (.. string-writer toString (replace "\n" "")))))
 
        "bestof_game"
        "firstto_game"
@@ -25,10 +25,16 @@
        "winby_game"))
 
 (deftest test-prompt-for-username
-  (let [string-writer (StringWriter.)]
-    (binding [*out* string-writer]
-      (prompt-for-username "Player 1")
-      (is (= "Player 1 Name: " (.toString string-writer))))))
+  (testing "prints prompt"
+    (let [string-writer (StringWriter.)]
+     (binding [*out* string-writer]
+       (prompt-for-username "Player 1")
+       (is (= "Player 1 Name: " (.toString string-writer))))))
+
+  (testing "reads response, returns player's name"
+    (binding [*in* (reader (StringReader. "Ghandi\n"))
+	      *out* (StringWriter.)]
+      (is (= "Ghandi" (prompt-for-username "Player 1"))))))
 
 (deftest test-prompt-for-throw
   (testing "prints prompt"

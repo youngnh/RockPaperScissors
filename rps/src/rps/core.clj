@@ -1,11 +1,16 @@
 (ns rps.core)
 
 (defn rps []
-  (prompt-for-username "Player 1")
-  (prompt-for-username "Player 2"))
+  (let [player1 (prompt-for-username "Player 1")
+	player2 (prompt-for-username "Player 2")
+	score (play-round)]
+    (condp = score
+	[1 0] (println player1 "Wins!")
+	[0 1] (println player2 "Wins!"))))
 
 (defn prompt-for-username [prompt]
-  (print prompt "Name: "))
+  (print prompt "Name: ")
+  (read-line))
 
 (defn prompt-for-throw []
   (print "[R]ock, [P]aper, or [S]cissors? ")
