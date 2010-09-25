@@ -6,23 +6,37 @@
   (:import [java.io StringReader StringWriter]))
 
 (deftest test-scripted-games
-  (are [filename]
-       (let [data-folder "data/RockPaperScissorsTest/"
-	     expected-output-file (str data-folder filename ".expected")
-	     input-file (str data-folder filename ".input")
-	     string-writer (StringWriter.)
-	     expected (.. (slurp expected-output-file)
-			  (replace "\n" ""))]
-	 (binding [*in* (reader input-file)
-		   *out* string-writer]
-	   (rps)
-	   (= expected (.. string-writer toString (replace "\n" "")))))
+  (testing "one throw games"
+   (are [filename]
+	(let [data-folder "data/RockPaperScissorsTest/"
+	      expected-output-file (str data-folder filename ".expected")
+	      input-file (str data-folder filename ".input")
+	      string-writer (StringWriter.)
+	      expected (.. (slurp expected-output-file)
+			   (replace "\n" ""))]
+	  (binding [*in* (reader input-file)
+		    *out* string-writer]
+	    (rps)
+	    (= expected (.. string-writer toString (replace "\n" "")))))
+	"nate_wins"
+	"noargs_game"))  
 
-       "bestof_game"
-       "firstto_game"
-       "nate_wins"
-       "noargs_game"
-       "winby_game"))
+  (testing "win logic"
+   (are [filename winlogic]
+	(let [data-folder "data/RockPaperScissorsTest/"
+	      expected-output-file (str data-folder filename ".expected")
+	      input-file (str data-folder filename ".input")
+	      string-writer (StringWriter.)
+	      expected (.. (slurp expected-output-file)
+			   (replace "\n" ""))]
+	  (binding [*in* (reader input-file)
+		    *out* string-writer]
+	    (rps winlogic)
+	    (= expected (.. string-writer toString (replace "\n" "")))))
+
+	"bestof_game" (best-of 5)
+	"firstto_game" (first-to 3)
+	"winby_game" (win-by 2 :to 3))))
 
 (deftest test-prompt-for-username
   (testing "prints prompt"
@@ -93,3 +107,18 @@
 	(binding [*in* rock-v-rock
 		  *out* (StringWriter.)]
 	  (is (= [0 0] (play-round))))))))
+
+(deftest test-first-to
+  (let [test-fn (first-to 3)]
+    (testing "exact"
+      (is (= "Ghandi" (test-fn [3 0] ["Ghandi" "Lincoln"])))
+      (is (= "Lincoln" (test-fn [0 3] ["Ghandi" "Lincoln"]))))
+
+    (testing "no one wins"
+      (are [score] (nil? (test-fn score ["Ghandi" "Lincoln"]))
+	   [0 0] [1 1] [1 2] [3 3]))
+
+    (testing "both scores are above"
+      (is (= "Ghandi" (test-fn [4 3] ["Ghandi" "Lincoln"])))
+      (is (= "Lincoln" (test-fn [6 7] ["Ghandi" "Lincoln"])))
+      (is (nil? (test-fn [8 8] ["Ghandi" "Lincoln"]))))))

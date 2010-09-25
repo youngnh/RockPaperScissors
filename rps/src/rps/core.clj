@@ -1,13 +1,5 @@
 (ns rps.core)
 
-(defn rps []
-  (let [player1 (prompt-for-username "Player 1")
-	player2 (prompt-for-username "Player 2")
-	score (play-round)]
-    (condp = score
-	[1 0] (println player1 "Wins!")
-	[0 1] (println player2 "Wins!"))))
-
 (defn prompt-for-username [prompt]
   (print prompt "Name: ")
   (read-line))
@@ -31,3 +23,30 @@
     (cond (beats throw other) [1 0]
 	  (beats other throw) [0 1]
 	  :otherwise [0 0])))
+
+(defn play-round-and-score [scores]
+  (map + scores (play-round)))
+
+(defn first-to [n]
+  (fn [[p1score p2score] [player1 player2]]
+    (cond (and (>= p1score n)
+	       (> p1score p2score)) player1
+	  (and (>= p2score n)
+	       (> p2score p1score)) player2)))
+
+(defn best-of [n]
+  (fn [[p1score p2score] [player1 player2]]
+    true))
+
+(defn win-by [by _ n]
+  (fn [[p1score p2score] [player1 player2]]
+    true))
+
+(defn rps
+  ([] (rps (first-to 1)))
+  ([winlogic]
+     (let [player1 (prompt-for-username "Player 1")
+	   player2 (prompt-for-username "Player 2")
+	   winner (some #(winlogic % [player1 player2])
+			(iterate play-round-and-score [0 0]))]
+       (println winner "Wins!"))))
