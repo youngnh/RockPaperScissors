@@ -6,7 +6,8 @@
 
 (deftest test-scripted-games
   (let [string-writer (StringWriter.)
-	expected (slurp "data/RockPaperScissorsTest/firstto_game.expected")]
+	expected (.. (slurp "data/RockPaperScissorsTest/firstto_game.expected")
+		     (replace "\n" ""))]
    (binding [*in* (reader "data/RockPaperScissorsTest/firstto_game.input")
 	     *out* string-writer]
      (rps)
@@ -17,3 +18,9 @@
     (binding [*out* string-writer]
       (prompt-for-username "Player 1")
       (is (= "Player 1 Name: " (.toString string-writer))))))
+
+(deftest test-prompt-for-throw
+  (let [string-writer (StringWriter.)]
+    (binding [*out* string-writer]
+      (prompt-for-throw)
+      (is (= "[R]ock, [P]aper, or [S]cissors? " (.toString string-writer))))))
