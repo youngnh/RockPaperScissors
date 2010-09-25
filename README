@@ -24,7 +24,8 @@ $ java RockPaperScissors -to 5
 $ java RockPaperScissors -bestof 5
 $ java RockPaperScissors -to 5 -by 2
 
-It should be written in Java, and I'm interested in how Test-Driven Development 
+Originally this was an excercise in TDD and Java, but it's moved beyond that
+into Haskell, Clojure and Ruby.  I'm interested in how Test-Driven Development 
 guides your design decisions, so it would be helpful if your commit log left a 
 concise and explanatory trail of what you did and why.  git rebase --interactive 
 may be helpful in revising the past in this regard.
