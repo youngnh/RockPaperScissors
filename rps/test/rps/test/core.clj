@@ -119,6 +119,21 @@
 	   [0 0] [1 1] [1 2] [3 3]))
 
     (testing "both scores are above"
-      (is (= "Ghandi" (test-fn [4 3] ["Ghandi" "Lincoln"])))
+      (is (= "Ghandi" (test-fn [5 4] ["Ghandi" "Lincoln"])))
+      (is (= "Lincoln" (test-fn [6 7] ["Ghandi" "Lincoln"])))
+      (is (nil? (test-fn [8 8] ["Ghandi" "Lincoln"]))))))
+
+(deftest test-best-of
+  (let [test-fn (best-of 5)]
+    (testing "exact"
+      (is (= "Ghandi" (test-fn [3 0] ["Ghandi" "Lincoln"])))
+      (is (= "Lincoln" (test-fn [0 3] ["Ghandi" "Lincoln"]))))
+
+    (testing "no one wins"
+      (are [score] (nil? (test-fn score ["Ghandi" "Lincoln"]))
+	   [0 0] [1 1] [1 2] [2 2]))
+
+    (testing "both scores are above"
+      (is (= "Ghandi" (test-fn [5 4] ["Ghandi" "Lincoln"])))
       (is (= "Lincoln" (test-fn [6 7] ["Ghandi" "Lincoln"])))
       (is (nil? (test-fn [8 8] ["Ghandi" "Lincoln"]))))))

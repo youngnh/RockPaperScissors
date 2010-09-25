@@ -34,9 +34,7 @@
 	  (and (>= p2score n)
 	       (> p2score p1score)) player2)))
 
-(defn best-of [n]
-  (fn [[p1score p2score] [player1 player2]]
-    true))
+(defn best-of [n] (first-to (inc (quot n 2))))
 
 (defn win-by [by _ n]
   (fn [[p1score p2score] [player1 player2]]
