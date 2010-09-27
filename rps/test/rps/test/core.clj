@@ -48,21 +48,17 @@
 	 :scissors :rock)))
 
 (deftest test-play-round
-  (testing "prompts both players for a throw"
-    (binding [*in* (reader (StringReader. "R\nS\n"))]
-      (is (starts-with? (output-of (play-round))
-			(join (take 2 (repeat "[R]ock, [P]aper, or [S]cissors? ")))))))
-
   (testing "returns score based on who had wining throw"
-    (let [rock-v-scissors (reader (StringReader. "R\nS\n"))
-	  paper-v-scissors (reader (StringReader. "P\nS\n"))
-	  rock-v-rock (reader (StringReader. "R\nR\n"))]
-      (are [input-stream expected-score] (binding [*in* input-stream
-						   *out* (StringWriter.)]
-					   (= expected-score (play-round)))
-	   rock-v-scissors [1 0]
-	   paper-v-scissors [0 1]
-	   rock-v-rock [0 0]))))
+    (are [throw other expected-score] (= expected-score (score-round throw other))
+	 :rock :scissors [1 0]
+	 :paper :scissors [0 1]
+	 :rock :rock [0 0])))
+
+(deftest test-add-score
+  (testing "adds two scores together"
+    (are [score1 score2 expected] (= expected (add-score score1 score2))
+	 [0 0] [0 0] [0 0]
+	 [1 2] [1 0] [2 2])))
 
 (deftest test-first-to
   (let [test-fn (first-to 3)]
@@ -111,6 +107,11 @@
       (is (= "Lincoln" (test-fn [17 19] ["Ghandi" "Lincoln"])))
       (is (nil? (test-fn [18 19] ["Ghandi" "Lincoln"])))
       (is (nil? (test-fn [19 19] ["Ghandi" "Lincoln"]))))))
+
+(deftest test-game
+  (testing "a game reads throws until the win logic produces a winner"
+    (is (= "Ghandi" (game (first-to 1) ["Ghandi" [:paper]] ["Lincoln" [:rock]])))
+    (is (= "Ghandi" (game (first-to 5) ["Ghandi" (repeat :paper)] ["Lincoln" (repeat :rock)])))))
 
 (deftest test-scripted-games
   (testing "one throw games"

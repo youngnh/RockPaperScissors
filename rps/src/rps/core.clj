@@ -18,15 +18,13 @@
 	   :paper :rock} throw)
      other))
 
-(defn play-round []
-  (let [throw (prompt-for-throw)
-	other (prompt-for-throw)]
-    (cond (beats throw other) [1 0]
-	  (beats other throw) [0 1]
-	  :otherwise [0 0])))
+(defn score-round [throw other]
+  (cond (beats throw other) [1 0]
+	(beats other throw) [0 1]
+	:otherwise [0 0]))
 
-(defn play-round-and-score [scores]
-  (map + scores (play-round)))
+(defn add-score [score1 score2]
+  (map + score1 score2))
 
 (defn win-by [by _ n]
   (let [won? (fn [score1 score2]
@@ -40,11 +38,13 @@
 
 (defn best-of [n] (first-to (inc (quot n 2))))
 
+(defn game [winlogic [player1 p1throws] [player2 p2throws]]
+  (some #(winlogic % [player1 player2]) (reductions add-score [0 0] (map score-round p1throws p2throws))))
+
 (defn rps
   ([] (rps (first-to 1)))
   ([winlogic]
-     (let [player1 (prompt-for-username "Player 1")
-	   player2 (prompt-for-username "Player 2")
-	   winner (some #(winlogic % [player1 player2])
-			(iterate play-round-and-score [0 0]))]
+     (let [player1 [(prompt-for-username "Player 1") (repeatedly prompt-for-throw)]
+	   player2 [(prompt-for-username "Player 2") (repeatedly prompt-for-throw)]
+	   winner (game winlogic player1 player2)]
        (println winner "Wins!"))))
