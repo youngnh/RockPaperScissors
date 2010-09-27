@@ -5,45 +5,15 @@
 	[clojure.contrib.io :only (reader)])
   (:import [java.io StringReader StringWriter]))
 
-(deftest test-scripted-games
-  (testing "one throw games"
-   (are [filename]
-	(let [data-folder "data/RockPaperScissorsTest/"
-	      expected-output-file (str data-folder filename ".expected")
-	      input-file (str data-folder filename ".input")
-	      string-writer (StringWriter.)
-	      expected (.. (slurp expected-output-file)
-			   (replace "\n" ""))]
-	  (binding [*in* (reader input-file)
-		    *out* string-writer]
-	    (rps)
-	    (= expected (.. string-writer toString (replace "\n" "")))))
-	"nate_wins"
-	"noargs_game"))  
-
-  (testing "win logic"
-   (are [filename winlogic]
-	(let [data-folder "data/RockPaperScissorsTest/"
-	      expected-output-file (str data-folder filename ".expected")
-	      input-file (str data-folder filename ".input")
-	      string-writer (StringWriter.)
-	      expected (.. (slurp expected-output-file)
-			   (replace "\n" ""))]
-	  (binding [*in* (reader input-file)
-		    *out* string-writer]
-	    (rps winlogic)
-	    (= expected (.. string-writer toString (replace "\n" "")))))
-
-	"bestof_game" (best-of 5)
-	"firstto_game" (first-to 3)
-	"winby_game" (win-by 2 :to 3))))
+(defmacro output-of [& body]
+  `(let [writer# (StringWriter.)]
+     (binding [*out* writer#]
+       ~@body
+       (.toString writer#))))
 
 (deftest test-prompt-for-username
   (testing "prints prompt"
-    (let [string-writer (StringWriter.)]
-     (binding [*out* string-writer]
-       (prompt-for-username "Player 1")
-       (is (= "Player 1 Name: " (.toString string-writer))))))
+    (is (= "Player 1 Name: " (output-of (prompt-for-username "Player 1")))))
 
   (testing "reads response, returns player's name"
     (binding [*in* (reader (StringReader. "Ghandi\n"))
@@ -52,11 +22,8 @@
 
 (deftest test-prompt-for-throw
   (testing "prints prompt"
-    (let [string-writer (StringWriter.)]
-      (binding [*in* (reader (StringReader. "R\n"))
-		*out* string-writer]
-       (prompt-for-throw)
-       (is (= "[R]ock, [P]aper, or [S]cissors? " (.toString string-writer))))))
+    (binding [*in* (reader (StringReader. "R\n"))]
+      (is (= "[R]ock, [P]aper, or [S]cissors? " (output-of (prompt-for-throw))))))
 
   (testing "reads response, returns throw"
     (binding [*in* (reader (StringReader. "R\nP\nS\n"))
@@ -82,31 +49,20 @@
 
 (deftest test-play-round
   (testing "prompts both players for a throw"
-    (let [string-writer (StringWriter.)]
-      (binding [*in* (reader (StringReader. "R\nS\n"))
-		*out* string-writer]
-	(play-round)
-	(is (starts-with? (.toString string-writer)
-			  (join (take 2 (repeat "[R]ock, [P]aper, or [S]cissors? "))))))))
+    (binding [*in* (reader (StringReader. "R\nS\n"))]
+      (is (starts-with? (output-of (play-round))
+			(join (take 2 (repeat "[R]ock, [P]aper, or [S]cissors? ")))))))
 
   (testing "returns score based on who had wining throw"
     (let [rock-v-scissors (reader (StringReader. "R\nS\n"))
 	  paper-v-scissors (reader (StringReader. "P\nS\n"))
 	  rock-v-rock (reader (StringReader. "R\nR\n"))]
-      (testing "Rock v. Scissors: rock wins"
-	(binding [*in* rock-v-scissors
-		 *out* (StringWriter.)]
-	 (is (= [1 0] (play-round)))))
-
-      (testing "Paper v. Scissors: paper loses"
-	(binding [*in* paper-v-scissors
-		  *out* (StringWriter.)]
-	  (is (= [0 1] (play-round)))))
-
-      (testing "Rock v. Rock: tie"
-	(binding [*in* rock-v-rock
-		  *out* (StringWriter.)]
-	  (is (= [0 0] (play-round))))))))
+      (are [input-stream expected-score] (binding [*in* input-stream
+						   *out* (StringWriter.)]
+					   (= expected-score (play-round)))
+	   rock-v-scissors [1 0]
+	   paper-v-scissors [0 1]
+	   rock-v-rock [0 0]))))
 
 (deftest test-first-to
   (let [test-fn (first-to 3)]
@@ -155,3 +111,29 @@
       (is (= "Lincoln" (test-fn [17 19] ["Ghandi" "Lincoln"])))
       (is (nil? (test-fn [18 19] ["Ghandi" "Lincoln"])))
       (is (nil? (test-fn [19 19] ["Ghandi" "Lincoln"]))))))
+
+(deftest test-scripted-games
+  (testing "one throw games"
+   (are [filename]
+	(let [data-folder "data/RockPaperScissorsTest/"
+	      expected-output-file (str data-folder filename ".expected")
+	      input-file (str data-folder filename ".input")
+	      expected (.. (slurp expected-output-file)
+			   (replace "\n" ""))]
+	  (binding [*in* (reader input-file)]
+	    (= expected (.. (output-of (rps)) (replace "\n" "")))))
+	"nate_wins"
+	"noargs_game"))  
+
+  (testing "win logic"
+   (are [filename winlogic]
+	(let [data-folder "data/RockPaperScissorsTest/"
+	      expected-output-file (str data-folder filename ".expected")
+	      input-file (str data-folder filename ".input")
+	      expected (.. (slurp expected-output-file)
+			   (replace "\n" ""))]
+	  (binding [*in* (reader input-file)]
+	    (= expected (.. (output-of (rps winlogic)) (replace "\n" "")))))
+	"bestof_game" (best-of 5)
+	"firstto_game" (first-to 3)
+	"winby_game" (win-by 2 :to 3))))
