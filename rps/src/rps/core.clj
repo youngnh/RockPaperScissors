@@ -13,9 +13,10 @@
        "S" :scissors)))
 
 (defn beats [throw other]
-  (= other (get {:rock :scissors
-		 :scissors :paper
-		 :paper :rock} throw)))
+  (= (get {:rock :scissors
+	   :scissors :paper
+	   :paper :rock} throw)
+     other))
 
 (defn play-round []
   (let [throw (prompt-for-throw)
@@ -28,11 +29,12 @@
   (map + scores (play-round)))
 
 (defn win-by [by _ n]
-  (fn [[p1score p2score] [player1 player2]]
-    (cond (and (>= p1score n)
-	       (>= (- p1score p2score) by)) player1
-	  (and (>= p2score n)
-	       (>= (- p2score p1score) by)) player2)))
+  (let [won? (fn [score1 score2]
+		  (and (>= score1 n)
+		       (>= (- score1 score2) by)))]
+   (fn [[p1score p2score] [player1 player2]]
+     (cond (won? p1score p2score) player1
+	   (won? p2score p1score) player2))))
 
 (defn first-to [n] (win-by 1 :to n))
 
