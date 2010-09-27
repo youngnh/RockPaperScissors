@@ -34,9 +34,9 @@
 	  (and (>= p2score n)
 	       (>= (- p2score p1score) by)) player2)))
 
-(defn best-of [n] (first-to (inc (quot n 2))))
-
 (defn first-to [n] (win-by 1 :to n))
+
+(defn best-of [n] (first-to (inc (quot n 2))))
 
 (defn rps
   ([] (rps (first-to 1)))
