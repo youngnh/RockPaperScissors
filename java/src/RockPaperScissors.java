@@ -1,57 +1,33 @@
-import com.twoguys.rps.*;
-import com.twoguys.util.*;
-import java.io.*;
-import java.util.*;
-
-public class RockPaperScissors {
-
-    private LineNumberReader in;
-    private PrintStream out;
-
-    public static void main(String[] args) {
-	InputStreamReader stdin = new InputStreamReader(System.in);
-	LineNumberReader in = new LineNumberReader(stdin);
-	PrintStream out = System.out;
-	
-	RockPaperScissors rps = new RockPaperScissors(in, out);
-	rps.run(args);
+var user = prompt("Do you choose rock, paper, or scissors?");
+var computer = Math.random();
+if(computer <= 0.33) {
+    computer = "rock";
+} else if(computer <= 0.66) {
+    computer = "paper";
+} else {
+    computer = "scissors";
+} console.log(user + " vs " + computer);
+var compare = function(c1, c2) {
+    if(c1 === c2) {
+        console.log("Tie!");
+    } else if(c1 === "rock") {
+        if(c2 === "paper") {
+            console.log("Computer wins!");
+        } else {
+            console.log("User wins!")
+        }
+    } else if(c1 === "paper") {
+        if(c2 === "scissors") {
+            console.log("Computer wins!");
+        } else {
+            console.log("User wins!")
+        }
+    } else if(c1 === "scissors") {
+        if(c2 === "rock") {
+            console.log("Computer wins!");
+        } else {
+            console.log("User wins!")
+        }
     }
-
-    public RockPaperScissors(LineNumberReader in, PrintStream out) {
-	this.in = in;
-	this.out = out;
-    }
-
-    public void run(String[] args) {
-	try {
-	    Either<String, WinLogic> logicOrError = WinLogicFactory.create(args);
-
-	    if(logicOrError.left() != null) {
-		out.print(logicOrError.left());
-	    } else {
-		WinLogic logic = logicOrError.right();
-
-		PlayerPrompt prompt1 = new PlayerPrompt(in, out, 1);
-		PlayerPrompt prompt2 = new PlayerPrompt(in, out, 2);
-
-		Player player1 = prompt1.prompt();
-		Player player2 = prompt2.prompt();
-
-		AllThrows p1Throws = new AllThrows(new ThrowPrompt(in, out));
-		AllThrows p2Throws = new AllThrows(new ThrowPrompt(in, out));
-
-		Pair<Player, Iterator<Throw>> p1 = new Pair<Player, Iterator<Throw>>(player1, p1Throws);
-		Pair<Player, Iterator<Throw>> p2 = new Pair<Player, Iterator<Throw>>(player2, p2Throws);
-
-		Game game = new Game(logic, p1, p2);
-		Player winner = game.play();
-
-		out.print(winner.getName() + " Wins!\n");
-		out.flush();
-	    }
-	} catch(Exception e) {
-	    e.printStackTrace(new PrintWriter(out));
-	}
-    }
-
-}
+};
+compare(user, computer);
